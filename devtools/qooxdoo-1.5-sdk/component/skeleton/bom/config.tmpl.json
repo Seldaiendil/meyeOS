@@ -1,0 +1,85 @@
+{
+  "let" :
+  {
+    "APPLICATION"  : "bom",
+    "QOOXDOO_PATH" : "${REL_QOOXDOO_PATH}",
+    "CACHE"        : "${Cache}",
+    "ROOT"         : "."
+  },
+  
+  "default-job" : "build",
+
+  "jobs" :
+  {
+    "build" :
+    {
+      "config-warnings" : 
+      { 
+        "exclude" :
+        [
+          "qx.data.SingleValueBinding",
+          "qx.event.type.Drag",
+          "qx.event.handler.DragDrop"
+        ]
+      },
+ 
+      "library" :
+      [
+        {
+          "manifest" : "$${QOOXDOO_PATH}/framework/Manifest.json"
+        }
+      ],
+
+      "cache" :
+      {
+        "compile"      : "$${CACHE}",
+        "downloads"    : "$${CACHE}/downloads",
+        "invalidate-on-tool-change" : true
+      },
+
+      "include" : 
+      [
+        "qx.event.handler.Application",
+        "qx.bom.Collection",
+        "qx.bom.Request",
+        "qx.bom.element.Background"
+      ],
+      
+      "exclude" :
+      [
+        "qx.data.SingleValueBinding",
+        "qx.event.type.Drag",
+        "qx.event.handler.DragDrop"
+      ],
+
+      "environment" :
+      {
+        "qx.debug" : false,
+        "qx.aspects" : false,
+        "qx.globalErrorHandling" : false
+      },
+
+      "compile-options" :
+      {
+        "paths" :
+        {
+          "file" : "qx-bom.js",
+          "app-root" : "."
+        },
+        "uris" :
+        {
+          "script"   : ".",
+          "resource" : "."
+        },
+        "code" :
+        {
+          "format"   : true,
+          "optimize" : [ "variables", "basecalls", "privates", "strings" ],
+          "except"   : []
+        }
+      },
+      
+      "compile" : { "type" : "build" }
+    }
+  }
+}

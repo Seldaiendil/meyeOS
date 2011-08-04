@@ -1,0 +1,159 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Calling Remote Procedures with qooxdoo &mdash; qooxdoo v1.4 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.4',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="qooxdoo v1.4 documentation" href="../../index.html" /> 
+  </head>
+  <body>
+
+		<div class="header">
+			<div class="headcenter">
+		    <a href="/"><img id="logo" src="http://resources.qooxdoo.org/images/logo.gif" alt="qooxdoo logo"/></a>
+		
+		    <h1 style="display: none;">qooxdoo</h1>
+		    <h2 class="subline">the new era of web development</h2>
+		  </div>
+			<div class="navigation">
+				<a href="http://qooxdoo.org">Home</a>
+				<a href="http://qooxdoo.org/about">About</a>
+				<a href="http://news.qooxdoo.org/">News</a>
+				<a href="http://qooxdoo.org/demo">Demo</a>
+				<a class="current" href="http://qooxdoo.org/documentation">Documentation</a>
+				<a href="http://qooxdoo.org/community">Community</a>
+				<a href="http://qooxdoo.org/download">Download</a>
+				<a href="http://bugzilla.qooxdoo.org/">Bugs</a>
+			</div>
+			<div class="subheader">&nbsp;</div>
+		</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+				<li> &raquo; <a href="http://qooxdoo.org">Home</a> &raquo;</li>
+        <li><a href="../../index.html">qooxdoo v1.4 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="calling-remote-procedures-with-qooxdoo">
+<span id="home-thron7-workspace-qooxdoo-trunk-documentation-manual-source-pages-communication-rpc-overview-calling-remote-procedures-with-qooxdoo"></span><h1>Calling Remote Procedures with qooxdoo<a class="headerlink" href="#calling-remote-procedures-with-qooxdoo" title="Permalink to this headline">¶</a></h1>
+<p>qooxdoo contains a standard way to make remote procedure calls, using the <a class="reference external" href="http://json-rpc.org/wiki/specification">JSON-RPC protocol</a>. There is an alternative <a class="reference external" href="http://qooxdoo.org/contrib/project#soap">SOAP client/server implementation</a>. We'll cover only the JSON-RPC mechanism here.</p>
+<div class="section" id="home-thron7-workspace-qooxdoo-trunk-documentation-manual-source-pages-communication-rpc-overview-json-rpc-protocol">
+<span id="id1"></span><h2>JSON-RPC Protocol<a class="headerlink" href="#home-thron7-workspace-qooxdoo-trunk-documentation-manual-source-pages-communication-rpc-overview-json-rpc-protocol" title="Permalink to this headline">¶</a></h2>
+<p>According to Wikipedia, <a class="reference external" href="http://en.wikipedia.org/wiki/JSON-RPC">JSON-RPC</a> &quot;is a very simple protocol (and very similar to XML-RPC), defining only a handful of data types and commands. In contrast to XML-RPC or SOAP, it allows for bidirectional communication between the service and the client, treating each more like peers and allowing peers to call one another or send notifications to one another. It also allows multiple calls to be sent to a peer which may be answered out of order.&quot; The current servers do not yet support bi-directional communication, but this could be something to be implemented in the future, using <a class="reference external" href="http://qooxdoo.org/contrib/project#cometd">cometd</a> technology.</p>
+</div>
+<div class="section" id="making-json-rpc-calls-from-qooxdoo">
+<span id="home-thron7-workspace-qooxdoo-trunk-documentation-manual-source-pages-communication-rpc-overview-making-json-rpc-calls-from-qooxdoo"></span><h2>Making JSON-RPC calls from qooxdoo<a class="headerlink" href="#making-json-rpc-calls-from-qooxdoo" title="Permalink to this headline">¶</a></h2>
+<p>Using the json-rpc transport is easy. See this <a class="reference external" href="http://qooxdoo.org/documentation/0.8/rpc">detailed tutorial</a> with code examples.</p>
+</div>
+<div class="section" id="json-rpc-backends">
+<span id="home-thron7-workspace-qooxdoo-trunk-documentation-manual-source-pages-communication-rpc-overview-json-rpc-backends"></span><h2>JSON-RPC Backends<a class="headerlink" href="#json-rpc-backends" title="Permalink to this headline">¶</a></h2>
+<p>qooxdoo comes with a choice of backends in different languages:</p>
+<blockquote>
+<ul class="simple">
+<li><strong>:doc:`Java &lt;0.8/rpc_java&gt;`</strong></li>
+<li><strong>:doc:`PHP &lt;0.8/rpc_php&gt;`</strong></li>
+<li><strong>:doc:`Perl &lt;0.8/rpc_perl&gt;`</strong></li>
+<li><strong>:doc:`Python &lt;rpc_python&gt;`</strong></li>
+</ul>
+</blockquote>
+</div>
+<div class="section" id="qooxdoo-json-rpc-specifications">
+<span id="home-thron7-workspace-qooxdoo-trunk-documentation-manual-source-pages-communication-rpc-overview-qooxdoo-json-rpc-specifications"></span><h2>qooxdoo JSON-RPC Specifications<a class="headerlink" href="#qooxdoo-json-rpc-specifications" title="Permalink to this headline">¶</a></h2>
+<p>In order to qualify as a qooxdoo json-rpc backend, a server must comply with the <tt class="xref doc docutils literal"><span class="pre">qooxdoo</span> <span class="pre">json-rpc</span> <span class="pre">server</span> <span class="pre">specifications</span></tt>.</p>
+<div class="section" id="adding-to-the-standard">
+<span id="home-thron7-workspace-qooxdoo-trunk-documentation-manual-source-pages-communication-rpc-overview-adding-to-the-standard"></span><h3>Adding to the standard<a class="headerlink" href="#adding-to-the-standard" title="Permalink to this headline">¶</a></h3>
+<p>If you think that the standard is missing a feature that should be implemented in all backends, please add it as a <a class="reference external" href="http://bugzilla.qooxdoo.org/enter_bug.cgi?product=contrib&amp;component=RpcExample">bug</a>, marking it as a &quot;core feature request&quot;.</p>
+</div>
+<div class="section" id="extending-the-standard">
+<span id="home-thron7-workspace-qooxdoo-trunk-documentation-manual-source-pages-communication-rpc-overview-extending-the-standard"></span><h3>Extending the standard<a class="headerlink" href="#extending-the-standard" title="Permalink to this headline">¶</a></h3>
+<p>If a server <em>extends</em> the standard with a certain optional behavior, please add a detailed description to it on the <tt class="xref doc docutils literal"><span class="pre">JSON-RPC</span> <span class="pre">Extensions</span> <span class="pre">page</span></tt>, with information which server implements this behavior. please also add a <a class="reference external" href="http://bugzilla.qooxdoo.org/enter_bug.cgi?product=contrib&amp;component=RpcExample">bug</a>, marked as a &quot;extension&quot; so that other server maintainers can discuss the pros and cons of adding the extension to their own servers.</p>
+</div>
+</div>
+<div class="section" id="debugging-backends">
+<span id="home-thron7-workspace-qooxdoo-trunk-documentation-manual-source-pages-communication-rpc-overview-debugging-backends"></span><h2>Debugging Backends<a class="headerlink" href="#debugging-backends" title="Permalink to this headline">¶</a></h2>
+<p>In order to debug your service methods on the backend independently of the client application, use the <a class="reference external" href="http://qooxdoo.org/contrib/project#rpcconsole">RpcConsole</a> contribution (<a class="reference external" href="http://qooxdoo.org/contrib/project/rpcconsole">documentation</a>).</p>
+</div>
+<div class="section" id="creating-mockup-data">
+<span id="home-thron7-workspace-qooxdoo-trunk-documentation-manual-source-pages-communication-rpc-overview-creating-mockup-data"></span><h2>Creating mockup data<a class="headerlink" href="#creating-mockup-data" title="Permalink to this headline">¶</a></h2>
+<p>The RpcConsole also contains a mixin class for qx.io.remote.Rpc which allows to prepare code relying on a json-rpc backend to work with static mockup data independently of the server. This allows to develop client and server independently and to create static demos. For more information, see the corresponding <a class="reference external" href="http://qooxdoo.org/contrib/project/rpcconsole#creating_mockup_data">documentation</a>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">Calling Remote Procedures with qooxdoo</a><ul>
+<li><a class="reference internal" href="#home-thron7-workspace-qooxdoo-trunk-documentation-manual-source-pages-communication-rpc-overview-json-rpc-protocol">JSON-RPC Protocol</a></li>
+<li><a class="reference internal" href="#making-json-rpc-calls-from-qooxdoo">Making JSON-RPC calls from qooxdoo</a></li>
+<li><a class="reference internal" href="#json-rpc-backends">JSON-RPC Backends</a></li>
+<li><a class="reference internal" href="#qooxdoo-json-rpc-specifications">qooxdoo JSON-RPC Specifications</a><ul>
+<li><a class="reference internal" href="#adding-to-the-standard">Adding to the standard</a></li>
+<li><a class="reference internal" href="#extending-the-standard">Extending the standard</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#debugging-backends">Debugging Backends</a></li>
+<li><a class="reference internal" href="#creating-mockup-data">Creating mockup data</a></li>
+</ul>
+</li>
+</ul>
+
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/pages/communication/rpc_overview.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2011, qooxdoo developers.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0b2.
+    </div>
+  </body>
+</html>

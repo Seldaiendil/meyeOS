@@ -1,0 +1,86 @@
+{
+  "name"    : "testrunner",
+
+  "include" :
+  [
+    {
+      "path" : "testrunner.json"  
+    },
+    {
+      "path" : "${QOOXDOO_PATH}/tool/data/config/application.json",
+      "block"   : 
+      [ 
+        "common",
+        "source",
+        "source-script",
+        "build",
+        "build-script",
+        "build-resources",
+        "build-files",
+        "clean" 
+      ]
+    }
+  ],
+  
+  "default-job" : "source",
+
+  "let" :
+  {
+    "APPLICATION"  : "testrunner",
+    "QOOXDOO_PATH" : "../..",
+    "API_EXCLUDE"  : ["qx.test.*", "${APPLICATION}.theme.*", "${APPLICATION}.test.*"],
+    "LOCALES"      : [ "en" ],
+    "CACHE"        : "${TMPDIR}/qx${QOOXDOO_VERSION}/cache",
+    "ROOT"         : ".",
+    "TEST_NAMESPACE" : "${APPLICATION}.test",
+    "TEST_INCLUDE" : "${TEST_NAMESPACE}.*"
+  },
+
+  // You only need to edit the remainder of this file, if you want to customize
+  // specific jobs, or add own job definitions.
+
+  "jobs" :
+  {
+    "source-tests-script" : 
+    {
+      "compile-options" :
+      {
+        "paths" :
+        {
+          "file" : "./source/script/tests-source.js",
+          "app-root" : "source/html"
+        }
+      }
+    }
+    /*
+    "source-script-packages" :
+    {
+      "extend" : ["source-script"],
+      
+      "packages" :
+      {
+        "parts"  :
+        {
+          "boot"     :
+          {
+            "include" : [ "${APPLICATION}.Application",  "${TEST_NAMESPACE}.DemoTest"]
+          },
+          "${TEST_NAMESPACE}.ui" :
+          {
+            "include" : [ "${TEST_NAMESPACE}.ui.*" ]
+          },
+          "${TEST_NAMESPACE}.data" :
+          {
+            "include" : [ "${TEST_NAMESPACE}.data.*" ]
+          }
+        }
+      },
+      
+      "environment" :
+      {
+        "testrunner.testParts" : ["${TEST_NAMESPACE}.ui", "${TEST_NAMESPACE}.data"]
+      }
+    },
+    */
+  }
+}

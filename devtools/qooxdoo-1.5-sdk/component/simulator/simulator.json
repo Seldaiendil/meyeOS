@@ -1,0 +1,126 @@
+{
+  "name"    : "Simulator (export) config",
+  
+  "let" :
+  {
+    "QOOXDOO_PATH" : "../..",
+    "CACHE"        : "${TMPDIR}/qx${QOOXDOO_VERSION}/cache",
+    "SIMULATOR_ROOT" : ".",
+    "BUILD_PATH"      : "${ROOT}/simulator",
+    "SIMULATION_INCLUDE" : "${APPLICATION}.simulation.*",
+    "SIMULATOR_CLASSPATH" : ["${SIMULATOR_ROOT}/tool/js.jar", "${SIMULATOR_ROOT}/tool/selenium-java-client-driver.jar"],
+    "SIMULATOR_APPLICATION" : "simulator.Application"
+  },
+  
+  "jobs" :
+  {
+    "simulation-build" :
+    {
+      "extend" : ["cache"],
+      
+      "config-warnings" :
+      {
+        "exclude" : [
+          "qx.core.Init",
+          "qx.event.GlobalError"
+        ]
+      },
+      
+      "library" :
+      [
+        {
+          "manifest" : "${QOOXDOO_PATH}/framework/Manifest.json",
+          "uri" : ".."
+        },
+        {
+          "manifest" : "${QOOXDOO_PATH}/component/simulator/Manifest.json"          
+        },
+        {
+          "manifest" : "${ROOT}/Manifest.json"          
+        }
+      ],
+      
+      "include" : [
+        "qx.Class",
+        "qx.Mixin",
+        "qx.Interface",
+        "simulator.Init",
+        "${SIMULATOR_APPLICATION}",
+        "${SIMULATION_INCLUDE}"
+      ],
+      
+      "exclude" : [
+        "qx.core.Init",
+        "qx.event.GlobalError"
+      ],
+      
+       "environment" :
+      {
+        "qx.debug" : true,
+        "qx.aspects" : false
+      },
+      
+      "compile-options" :
+      {
+        "code" :
+        {
+          "format"   : true,
+          "optimize" : [ "variables", "basecalls", "privates" ],
+          "except" : []
+        },
+        "paths" :
+        {
+          "file" : "${BUILD_PATH}/script/simulator.js",
+          "loader-template" : "${QOOXDOO_PATH}/component/simulator/tool/simulator.loader.tmpl.js",
+          "app-root" : "${BUILD_PATH}"
+        },
+        "uris" :
+        {
+          "script"   : ".",
+          "resource" : "."
+        }
+      },
+      
+      "compile" : { "type" : "build" },
+      
+      "environment" :
+      {
+        "qx.version"     : "${QOOXDOO_VERSION}",
+        "qx.revision"    : "${QOOXDOO_REVISION}",
+        "qx.application" : "${SIMULATOR_APPLICATION}",
+        "simulator.nameSpace" : "${APPLICATION}.simulation",
+        "qx.globalErrorHandling" : false
+      }
+      
+    },
+    
+    "simulation-run" :
+    {
+      "extend"   : [ "cache" ],
+
+      "simulate" : 
+      {
+        "java-classpath" : "${SIMULATOR_CLASSPATH}",
+        "qxselenium-path" : "${SIMULATOR_ROOT}/tool",
+        "rhino-class" : "org.mozilla.javascript.tools.shell.Main",
+        "simulator-script" : "${BUILD_PATH}/script/simulator.js"
+      },
+      
+      "environment" :
+      {
+        "simulator.selServer" : "localhost",
+        "simulator.selPort" : 4444,
+        "simulator.testBrowser" : "*firefox3",
+        "simulator.autHost" : "http://localhost",
+        "simulator.autPath" : "/${APPLICATION}/source/index.html",
+        
+        "simulator.logFile" : false,
+        "simulator.globalErrorLogging" : false,
+        "simulator.testEvents" : false,
+        "simulator.applicationLog" : false,
+        "simulator.disposerDebug" : false,
+        "simulator.threadSafe" : false
+      }
+    }
+  }
+}

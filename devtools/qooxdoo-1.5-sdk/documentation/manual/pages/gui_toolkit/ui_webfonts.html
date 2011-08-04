@@ -1,0 +1,195 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Web Fonts &mdash; qooxdoo v1.5 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.5',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="qooxdoo v1.5 documentation" href="../../index.html" />
+    <link rel="up" title="GUI Toolkit" href="../gui_toolkit.html" />
+    <link rel="next" title="Using themes of contributions in your application" href="ui_using_themes_of_contribs.html" />
+    <link rel="prev" title="Decorators" href="ui_decorators.html" /> 
+  </head>
+  <body>
+
+		<div class="header">
+			<div class="headcenter">
+		    <a href="/"><img id="logo" src="http://resources.qooxdoo.org/images/logo.gif" alt="qooxdoo logo"/></a>
+		
+		    <h1 style="display: none;">qooxdoo</h1>
+		    <h2 class="subline">the new era of web development</h2>
+		  </div>
+			<div class="navigation">
+				<a href="http://qooxdoo.org">Home</a>
+				<a href="http://qooxdoo.org/about">About</a>
+				<a href="http://news.qooxdoo.org/">News</a>
+				<a href="http://qooxdoo.org/demo">Demo</a>
+				<a class="current" href="http://qooxdoo.org/documentation">Documentation</a>
+				<a href="http://qooxdoo.org/community">Community</a>
+				<a href="http://qooxdoo.org/download">Download</a>
+				<a href="http://bugzilla.qooxdoo.org/">Bugs</a>
+			</div>
+			<div class="subheader">&nbsp;</div>
+		</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="ui_using_themes_of_contribs.html" title="Using themes of contributions in your application"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="ui_decorators.html" title="Decorators"
+             accesskey="P">previous</a> |</li>
+				<li> &raquo; <a href="http://qooxdoo.org">Home</a> &raquo;</li>
+        <li><a href="../../index.html">qooxdoo v1.5 documentation</a> &raquo;</li>
+          <li><a href="../gui_toolkit.html" accesskey="U">GUI Toolkit</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="web-fonts">
+<span id="pages-ui-webfonts-webfonts"></span><h1>Web Fonts<a class="headerlink" href="#web-fonts" title="Permalink to this headline">¶</a></h1>
+<p>qooxdoo's web fonts implementation is based on the &#64;font-face CSS syntax. It attempts to abstract away cross-browser issues as far as possible, but due to the <a class="reference external" href="http://webfonts.info/wiki/index.php?title=%40font-face_browser_support">browser differences in web font support</a>, it's up to the application developer to provide fonts in the appropriate formats.
+Tools like FontForge or services like <a class="reference external" href="http://www.fontsquirrel.com/fontface/generator">FontSquirrel's font-face generator</a> can be used to convert fonts.</p>
+<div class="section" id="theme-definition">
+<span id="pages-ui-webfonts-theme-definition"></span><h2>Theme Definition<a class="headerlink" href="#theme-definition" title="Permalink to this headline">¶</a></h2>
+<p>Like any font that should be used in a qooxdoo application, web fonts are defined in the <a class="reference internal" href="ui_theming.html#pages-ui-theming-font-theme"><em>Font theme</em></a>. They simply use an additional <strong>sources</strong> key:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="cm">/* ************************************************************************</span>
+<span class="cm">  #asset(custom/fonts/*)</span>
+<span class="cm">************************************************************************ */</span>
+
+<span class="nx">qx</span><span class="p">.</span><span class="nx">Theme</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="s2">&quot;custom.theme.Font&quot;</span><span class="p">,</span>
+<span class="p">{</span>
+  <span class="nx">fonts</span> <span class="o">:</span>
+  <span class="p">{</span>
+    <span class="s2">&quot;fancy&quot;</span> <span class="o">:</span>
+    <span class="p">{</span>
+      <span class="nx">size</span> <span class="o">:</span> <span class="mi">11</span><span class="p">,</span>
+      <span class="nx">lineHeight</span> <span class="o">:</span> <span class="mf">1.4</span><span class="p">,</span>
+      <span class="nx">family</span> <span class="o">:</span> <span class="p">[</span> <span class="s2">&quot;Tahoma&quot;</span><span class="p">,</span> <span class="s2">&quot;Liberation Sans&quot;</span><span class="p">,</span> <span class="s2">&quot;Arial&quot;</span> <span class="p">],</span>
+      <span class="nx">sources</span><span class="o">:</span>
+      <span class="p">[</span>
+        <span class="p">{</span>
+          <span class="nx">family</span> <span class="o">:</span> <span class="s2">&quot;YanoneKaffeesatzRegular&quot;</span><span class="p">,</span>
+          <span class="nx">source</span><span class="o">:</span>
+          <span class="p">[</span>
+            <span class="s2">&quot;custom/fonts/yanonekaffeesatz-regular-webfont.eot&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;custom/fonts/yanonekaffeesatz-regular-webfont.ttf&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;custom/fonts/yanonekaffeesatz-regular-webfont.woff&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;custom/fonts/yanonekaffeesatz-regular-webfont.svg#YanoneKaffeesatzRegular&quot;</span>
+          <span class="p">]</span>
+        <span class="p">}</span>
+      <span class="p">]</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<p>There are a few things to note here:</p>
+<ul class="simple">
+<li>The value of <strong>sources</strong> is an Array. As with regular CSS font-family definitions, the first font in the list that is available at runtime (meaning in this case it has been successfully downloaded) will be applied to widgets using the &quot;fancy&quot; font.</li>
+<li>The value of the <strong>family</strong> key will also be added to the font-family style property of the widget's content element so there is a defined fallback path even if no web font at all could be loaded.</li>
+<li>Between one and four different formats of the same font can be provided depending on which browsers should be supported. For SVG, it is necessary to add the font's ID. This can be found by looking for the path <a class="reference external" href="mailto:svg/defs/font/&#37;&#52;&#48;id">svg/defs/font/<span>&#64;</span>id</a> in the XML definition, or copied from the CSS template created by the FontSquirrel generator.</li>
+<li>Each <strong>source</strong> entry can be either a URI or a <a class="reference internal" href="ui_resources.html#pages-ui-resources-resources"><em>qooxdoo resource ID</em></a>. The latter is generally preferable since font files will then be copied to the output directory for the build version just like any other application resource. Also, this prevents issues in Firefox which applies Same-Origin Policy restrictions to web fonts.</li>
+</ul>
+<p>Once configured, web fonts are applied like any other font, either by referencing them in the Appearance theme, e.g.:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="s2">&quot;window/title&quot;</span> <span class="o">:</span>
+<span class="p">{</span>
+  <span class="nx">style</span> <span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">states</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="nx">cursor</span> <span class="o">:</span> <span class="s2">&quot;default&quot;</span><span class="p">,</span>
+      <span class="nx">font</span> <span class="o">:</span> <span class="s2">&quot;fancy&quot;</span><span class="p">,</span>
+      <span class="nx">marginRight</span> <span class="o">:</span> <span class="mi">20</span><span class="p">,</span>
+      <span class="nx">alignY</span><span class="o">:</span> <span class="s2">&quot;middle&quot;</span>
+    <span class="p">};</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>or by calling a widget instance's setFont method:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">label</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">qx</span><span class="p">.</span><span class="nx">ui</span><span class="p">.</span><span class="nx">basic</span><span class="p">.</span><span class="nx">Label</span><span class="p">(</span><span class="s2">&quot;A web font label&quot;</span><span class="p">);</span>
+<span class="nx">label</span><span class="p">.</span><span class="nx">setFont</span><span class="p">(</span><span class="s2">&quot;fancy&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="asynchronous-loading-considerations">
+<h2>Asynchronous loading considerations<a class="headerlink" href="#asynchronous-loading-considerations" title="Permalink to this headline">¶</a></h2>
+<p>As web fonts are loaded over HTTP, there can be a noticeable delay between adding the CSS rule to the document and the font style being applied to DOM elements. This means text will be rendered in the first available fallback font, then once the web font has finished downloading, affected widgets will recalculate their content size and trigger a layout update, which can cause a visible &quot;jump&quot; in the GUI. While this effect is far less pronounced (if at all noticeable) once the fonts are cached, it is still advisable to use web fonts sparingly.
+Of course, using no more than two or three font-faces in an application is also good advice from a design point of view.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">Web Fonts</a><ul>
+<li><a class="reference internal" href="#theme-definition">Theme Definition</a></li>
+<li><a class="reference internal" href="#asynchronous-loading-considerations">Asynchronous loading considerations</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="ui_decorators.html"
+                                  title="previous chapter">Decorators</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="ui_using_themes_of_contribs.html"
+                                  title="next chapter">Using themes of contributions in your application</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/pages/gui_toolkit/ui_webfonts.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2011, qooxdoo developers.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0b2.
+    </div>
+  </body>
+</html>

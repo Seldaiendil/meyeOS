@@ -1,0 +1,78 @@
+{
+	"export": ["compile", "build", "debug"],
+	"include": [
+		{
+			"as": "appconf",
+			"path": "${QOOXDOO_PATH}/tool/data/config/application.json"
+		},
+		{
+			"path": "image.json"
+		}
+	],
+	"jobs": {
+		"base": {
+			"compile" : {
+				"type": "build"
+			},
+			"compile-options": {
+				"paths": {
+					"file": "../../../eyeos/extern/js/qx.js",
+					"app-root": "build"
+				},
+				"code": {
+					"locales" : ["de", "en", "es", "fr", "it", "nl", "sv"],
+					"format": ["on"],
+					"except": []
+				}
+			},
+			"copy-resources": {
+				"target": "../../../"
+			},
+			"exclude": ["qx.test.*"],
+			"include": ["qx.*", "eyeos.theme.EyeTheme", "qxjqplot.*"],
+			"library": [
+				{
+					"manifest": "Manifest.json"
+				},
+				{
+					"manifest" : "../../eyetheme/Manifest.json"
+				},
+				{
+					"manifest": "../../jqplot/Manifest.json"
+				}
+			],
+			"environment": {
+				"qx.application": "eyeos.Application",
+				"qx.theme": "eyeos.theme.EyeTheme",
+				"qx.debug": false,
+				"eyeos.debug": true
+			}
+		},
+		"compile": {
+			"extend": ["base"],
+			"compile-options": {
+				"code": {
+					"optimize": ["basecalls", "privates", "strings", "variables"],
+					"format": ["off"]
+				}
+			},
+			"environment": {
+				"eyeos.debug": false
+			}
+		},
+		"build": {
+			"extend": ["base"]
+		},
+		"debug": {
+			"extend": ["base"],
+			"environment": {
+				"qx.debug": true
+			}
+		}
+	},
+	"let": {
+		"APPLICATION": "qx",
+		"LOCALES": ["de", "en", "es", "fr", "it", "nl", "sv"],
+		"QOOXDOO_PATH": ".."
+	}
+}

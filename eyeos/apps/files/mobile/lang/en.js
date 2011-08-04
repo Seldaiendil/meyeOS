@@ -1,0 +1,12 @@
+lang['This folder is empty'] = 'This folder is empty';
+lang['No Preview available for this file'] = 'No Preview available for this file';
+lang['Loading new pages'] = 'Loading new pages';
+lang['Converting the file to MP3'] = 'Converting the file to MP3';
+lang['Converting the file to OGG'] = 'Converting the file to OGG';
+lang['Converting the file to M4A'] = 'Converting the file to M4A';
+lang['Converting the file to WAV'] = 'Converting the file to WAV';
+lang['This browser doesn\'t support any standard format'] = 'This browser doesn\'t support any standard format';
+lang['Error playing this file'] = 'Error playing this file';
+lang['This browser doesn\'t support audio tag'] = 'This browser doesn\'t support audio tag';
+lang['This browser doesn\'t support video tag'] = 'This browser doesn\'t support video tag';
+lang['Android 2.3 or better required'] = 'Android 2.3 or better required';

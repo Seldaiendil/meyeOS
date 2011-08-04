@@ -1,0 +1,37 @@
+{
+  "name" : "Simulator (application) config",
+
+  "include" :
+  [
+    {
+      "path" : "simulator.json"  
+    },
+    
+    {
+      "path" : "${QOOXDOO_PATH}/tool/data/config/application.json",
+      "block"   : 
+      [
+        "common",
+        "source",
+        "source-script",
+        "build",
+        "build-script",
+        "build-resources",
+        "build-files",
+        "clean" 
+      ]
+    }
+  ],
+
+  "default-job" : "simulation-build",
+
+  "let" :
+  {
+      "APPLICATION"  : "simulator",
+      "QOOXDOO_PATH" : "../..",
+      "QXTHEME"      : "qx.theme.Modern",
+      "CACHE"        : "${TMPDIR}/qx${QOOXDOO_VERSION}/cache",
+      "SIMULATION_INCLUDE" : "",
+      "API_EXCLUDE" : ["qx.test.*"]
+  }
+}

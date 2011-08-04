@@ -1,0 +1,311 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Virtual ComboBox &mdash; qooxdoo v1.5 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.5',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="qooxdoo v1.5 documentation" href="../../index.html" />
+    <link rel="up" title="Widget Reference List" href="toctree.html" />
+    <link rel="next" title="Virtual SelectBox" href="virtualselectbox.html" />
+    <link rel="prev" title="Virtual List" href="virtuallist.html" /> 
+  </head>
+  <body>
+
+		<div class="header">
+			<div class="headcenter">
+		    <a href="/"><img id="logo" src="http://resources.qooxdoo.org/images/logo.gif" alt="qooxdoo logo"/></a>
+		
+		    <h1 style="display: none;">qooxdoo</h1>
+		    <h2 class="subline">the new era of web development</h2>
+		  </div>
+			<div class="navigation">
+				<a href="http://qooxdoo.org">Home</a>
+				<a href="http://qooxdoo.org/about">About</a>
+				<a href="http://news.qooxdoo.org/">News</a>
+				<a href="http://qooxdoo.org/demo">Demo</a>
+				<a class="current" href="http://qooxdoo.org/documentation">Documentation</a>
+				<a href="http://qooxdoo.org/community">Community</a>
+				<a href="http://qooxdoo.org/download">Download</a>
+				<a href="http://bugzilla.qooxdoo.org/">Bugs</a>
+			</div>
+			<div class="subheader">&nbsp;</div>
+		</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="virtualselectbox.html" title="Virtual SelectBox"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="virtuallist.html" title="Virtual List"
+             accesskey="P">previous</a> |</li>
+				<li> &raquo; <a href="http://qooxdoo.org">Home</a> &raquo;</li>
+        <li><a href="../../index.html">qooxdoo v1.5 documentation</a> &raquo;</li>
+          <li><a href="../references.html" >References</a> &raquo;</li>
+          <li><a href="widget_ref.html" >Widget Reference</a> &raquo;</li>
+          <li><a href="toctree.html" accesskey="U">Widget Reference List</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="virtual-combobox">
+<span id="pages-widget-virtualwidgets-virtualcombobox"></span><h1>Virtual ComboBox<a class="headerlink" href="#virtual-combobox" title="Permalink to this headline">¶</a></h1>
+<p>The virtual ComboBox acts like the regular <a class="reference internal" href="combobox.html"><em>ComboBox</em></a>, but is based on the framework's virtual infrastructure.</p>
+<div class="section" id="preview-image">
+<span id="pages-widget-virtualcombobox-preview-image"></span><h2>Preview Image<a class="headerlink" href="#preview-image" title="Permalink to this headline">¶</a></h2>
+<p><img alt="widget/virtualcombobox.png" src="../../_images/virtualcombobox.png" /></p>
+</div>
+<div class="section" id="features">
+<span id="pages-widget-virtualcombobox-features"></span><h2>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Mouse and keyboard support.</li>
+<li>Items with plain text and/or icons</li>
+<li>Ellipsis: If the label does not fit into the widget's bounds an ellipsis (”...”) is rendered at the end of the label.</li>
+<li>Supports filtering, sorting, grouping, data binding and custom rendering like the <a class="reference internal" href="virtuallist.html"><em>Virtual List</em></a>.</li>
+</ul>
+<p><strong>Mouse and keyboard behavior:</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="16%" />
+<col width="9%" />
+<col width="30%" />
+<col width="46%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">&nbsp;</th>
+<th class="head">&nbsp;</th>
+<th class="head">&nbsp;</th>
+<th class="head">&nbsp;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>&nbsp;</td>
+<td>keyboard</td>
+<td><strong>open drop-down</strong></td>
+<td>key down; key up;</td>
+</tr>
+<tr><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><strong>close drop-down</strong></td>
+<td>esc; enter</td>
+</tr>
+<tr><td>&nbsp;</td>
+<td>mouse</td>
+<td><strong>open drop-down</strong></td>
+<td>click on arrow button</td>
+</tr>
+<tr><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><strong>close drop-down</strong></td>
+<td>click on item; click outside drop-down</td>
+</tr>
+<tr><td>drop-down closed</td>
+<td>keyboard</td>
+<td><strong>select next</strong></td>
+<td>not possible</td>
+</tr>
+<tr><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><strong>select previous</strong></td>
+<td>not possible</td>
+</tr>
+<tr><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><strong>select first</strong></td>
+<td>not possible</td>
+</tr>
+<tr><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><strong>select last</strong></td>
+<td>not possible</td>
+</tr>
+<tr><td>&nbsp;</td>
+<td>mouse</td>
+<td><strong>select next</strong></td>
+<td>not possible</td>
+</tr>
+<tr><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><strong>select previous</strong></td>
+<td>not possible</td>
+</tr>
+<tr><td>drop-down open</td>
+<td>keyboard</td>
+<td><strong>select next</strong></td>
+<td>key down then enter</td>
+</tr>
+<tr><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><strong>select previous</strong></td>
+<td>key up then enter</td>
+</tr>
+<tr><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><strong>select first</strong></td>
+<td>page up then enter</td>
+</tr>
+<tr><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><strong>select last</strong></td>
+<td>page down then enter</td>
+</tr>
+<tr><td>&nbsp;</td>
+<td>mouse</td>
+<td><strong>select next</strong></td>
+<td>click on item</td>
+</tr>
+<tr><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><strong>select previous</strong></td>
+<td>click on item</td>
+</tr>
+<tr><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><strong>wrap in list</strong></td>
+<td>no</td>
+</tr>
+<tr><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><strong>preselect</strong></td>
+<td>mouse over; key up; key down</td>
+</tr>
+<tr><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td><strong>select drop-down item on open</strong></td>
+<td>yes, first item in the list which begins with value</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="description">
+<span id="pages-widget-virtualcombobox-description"></span><h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="docutils literal"><span class="pre">qx.ui.form.VirtualComboBox</span></tt> is based on the virtual infrastructure. The virtual SelectBox has both a <a class="reference internal" href="textfield.html"><em>TextField</em></a> and a <a class="reference internal" href="virtuallist.html"><em>Virtual List</em></a> drop-down. The drop-down can be used to predefine values which the user can select.</p>
+<p>Using the virtual infrastructure has considerable advantages when there is a huge amount of model items to render: Widgets are created only for visible items and reused. This saves both creation time and memory.</p>
+<p>The virtual ComboBox uses the same <a class="reference external" href="http://demo.qooxdoo.org/1.5/apiviewer/#qx.ui.list.core.IListDelegate">qx.ui.list.core.IListDelegate</a> interface as the <a class="reference internal" href="virtuallist.html"><em>Virtual List</em></a> to configure the ComboBox's behavior (item and group renderer configuration, filtering, sorting, grouping, etc.).</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">At the moment we only support widget based rendering for list and group items, but we are planning to also support HTML based rendering in a future release.</p>
+</div>
+</div>
+<div class="section" id="code-example">
+<span id="pages-widget-virtualcombobox-codeexample"></span><h2>Code Example<a class="headerlink" href="#code-example" title="Permalink to this headline">¶</a></h2>
+<p>Here's an example. We create a simple ComboBox example with 2500 items, sorting the items (ascending) and log each value change.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="c1">//create the model data</span>
+<span class="kd">var</span> <span class="nx">rawData</span> <span class="o">=</span> <span class="p">[];</span>
+<span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">2500</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">rawData</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Item No &quot;</span> <span class="o">+</span> <span class="nx">i</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kd">var</span> <span class="nx">model</span> <span class="o">=</span> <span class="nx">qx</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">marshal</span><span class="p">.</span><span class="nx">Json</span><span class="p">.</span><span class="nx">createModel</span><span class="p">(</span><span class="nx">rawData</span><span class="p">);</span>
+
+<span class="c1">//create the SelectBox</span>
+<span class="kd">var</span> <span class="nx">comboBox</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">qx</span><span class="p">.</span><span class="nx">ui</span><span class="p">.</span><span class="nx">form</span><span class="p">.</span><span class="nx">VirtualComboBox</span><span class="p">(</span><span class="nx">model</span><span class="p">);</span>
+
+<span class="c1">//configure the ComboBox&#39;s behavior</span>
+<span class="kd">var</span> <span class="nx">delegate</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">sorter</span> <span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">a</span> <span class="o">&gt;</span> <span class="nx">b</span> <span class="o">?</span> <span class="mi">1</span> <span class="o">:</span> <span class="nx">a</span> <span class="o">&lt;</span> <span class="nx">b</span> <span class="o">?</span> <span class="o">-</span><span class="mi">1</span> <span class="o">:</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+<span class="nx">comboBox</span><span class="p">.</span><span class="nx">setDelegate</span><span class="p">(</span><span class="nx">delegate</span><span class="p">);</span>
+
+<span class="c1">//log value changes</span>
+<span class="nx">comboBox</span><span class="p">.</span><span class="nx">addListener</span><span class="p">(</span><span class="s2">&quot;changeValue&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">debug</span><span class="p">(</span><span class="s2">&quot;Value: &quot;</span> <span class="o">+</span> <span class="nx">e</span><span class="p">.</span><span class="nx">getData</span><span class="p">());</span>
+<span class="p">},</span> <span class="k">this</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="demos">
+<span id="pages-widget-virtualcombobox-demos"></span><h2>Demos<a class="headerlink" href="#demos" title="Permalink to this headline">¶</a></h2>
+<p>Here are some links that demonstrate the usage of the widget:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://demo.qooxdoo.org/1.5/demobrowser/#virtual~ComboBox.html">ComboBox demo</a></li>
+</ul>
+</div>
+<div class="section" id="api">
+<span id="pages-widget-virtualcombobox-api"></span><h2>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line">Here is a link to the API of the widget:</div>
+<div class="line"><a class="reference external" href="http://demo.qooxdoo.org/1.5/apiviewer/#qx.ui.form.VirtualComboBox">qx.ui.form.VirtualComboBox</a></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">Virtual ComboBox</a><ul>
+<li><a class="reference internal" href="#preview-image">Preview Image</a></li>
+<li><a class="reference internal" href="#features">Features</a></li>
+<li><a class="reference internal" href="#description">Description</a></li>
+<li><a class="reference internal" href="#code-example">Code Example</a></li>
+<li><a class="reference internal" href="#demos">Demos</a></li>
+<li><a class="reference internal" href="#api">API</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="virtuallist.html"
+                                  title="previous chapter">Virtual List</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="virtualselectbox.html"
+                                  title="next chapter">Virtual SelectBox</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/pages/widget/virtualcombobox.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2011, qooxdoo developers.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0b2.
+    </div>
+  </body>
+</html>

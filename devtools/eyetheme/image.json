@@ -1,0 +1,863 @@
+{
+  // FRAMEWORK IMAGE CLIPPING AND COMBINING JOBS
+  "jobs" :
+  {
+    "common" :
+    {
+      "let" :
+      {
+        "RESPATH" : "./source/resource",
+        "EYETHEME" : "eyetheme/decoration"
+      },
+
+      "cache" :
+      {
+        "compile" : "${TMPDIR}/cache"
+      }
+    },
+
+
+    "image-clipping" :
+    {
+      "extend" : ["common"],
+
+      "slice-images" :
+      {
+        "images" :
+        {               
+          "${RESPATH}/source/eyetheme/scrollbar-button-bg-vertical.png" :
+          {
+            "prefix" : "../../${EYETHEME}/scrollbar/scrollbar-button-bg-vertical",
+            "border-width" : [8,0,8,0]
+          },
+          "${RESPATH}/source/eyetheme/scrollbar-button-bg-horizontal.png" :
+          {
+            "prefix" : "../../${EYETHEME}/scrollbar/scrollbar-button-bg-horizontal",
+            "border-width" : [0,8,0,8]
+          },            
+          // this is the input file
+          "${RESPATH}/source/eyetheme/shadow.png" :
+          {
+            "prefix" : "../../${EYETHEME}/shadow/shadow",
+            "border-width" : 5
+          }, 
+          "${RESPATH}/source/eyetheme/shadow-strong.png" :
+          {
+            "prefix" : "../../${EYETHEME}/shadow/shadow-strong",
+            "border-width" : 7
+          },
+          "${RESPATH}/source/eyetheme/shadow-window.png" :
+          {
+            "prefix" : "../../${EYETHEME}/shadow/shadow-window",
+            "border-width" : 5
+          },
+          "${RESPATH}/source/eyetheme/shadow-window-active.png" :
+          {
+            "prefix" : "../../${EYETHEME}/shadow/shadow-window-active",
+            "border-width" : 5
+          },
+          "${RESPATH}/source/eyetheme/red-shadow.png" :
+          {
+            "prefix" : "../../${EYETHEME}/shadow/red-shadow",
+            "border-width" : 5
+          },
+          "${RESPATH}/source/eyetheme/green-shadow.png" :
+          {
+            "prefix" : "../../${EYETHEME}/shadow/green-shadow",
+            "border-width" : 5
+          },
+          "${RESPATH}/source/eyetheme/gray-shadow.png" :
+          {
+            "prefix" : "../../${EYETHEME}/shadow/gray-shadow",
+            "border-width" : 5
+          },
+          "${RESPATH}/source/eyetheme/tooltip-error.png" :
+          {
+            "prefix" : "../../${EYETHEME}/form/tooltip-error",
+            "border-width" : 6
+          },          
+          "${RESPATH}/source/eyetheme/button-checked.png" :
+          {
+            "prefix" : "../../${EYETHEME}/form/button-checked",
+            "border-width" : 2
+          },
+          "${RESPATH}/source/eyetheme/button-pressed.png" :
+          {
+            "prefix" : "../../${EYETHEME}/form/button-pressed",
+            "border-width" : 2
+          },
+          "${RESPATH}/source/eyetheme/button-hovered.png" :
+          {
+            "prefix" : "../../${EYETHEME}/form/button-hovered",
+            "border-width" : 2
+          },
+          "${RESPATH}/source/eyetheme/button-disabled.png" :
+          {
+            "prefix" : "../../${EYETHEME}/form/button-disabled",
+            "border-width" : 2
+          },
+          "${RESPATH}/source/eyetheme/button.png" :
+          {
+            "prefix" : "../../${EYETHEME}/form/button",
+            "border-width" : 2
+          },
+          "${RESPATH}/source/eyetheme/button-red.png" :
+          {
+            "prefix" : "../../${EYETHEME}/form/button-red",
+            "border-width" : 2
+          },
+          "${RESPATH}/source/eyetheme/button-green.png" :
+          {
+            "prefix" : "../../${EYETHEME}/form/button-green",
+            "border-width" : 2
+          },
+          // window captionbar active split
+          "${RESPATH}/source/eyetheme/window-captionbar.png" :
+          {
+            "prefix" : "../../${EYETHEME}/window/captionbar",
+            "border-width" : 4
+          },
+
+          // window statusbar split
+          "${RESPATH}/source/eyetheme/window-statusbar.png" :
+          {
+            "prefix" : "../../${EYETHEME}/window/statusbar",
+            "border-width" : 4
+          },
+          // tabview-pane split
+          "${RESPATH}/source/eyetheme/tabview-pane.png" :
+          {
+            "prefix" : "../../${EYETHEME}/tabview/tabview-pane",
+            "border-width" : 30
+          },   
+
+          // SWITCHER IMAGES
+
+          // active switcher button split
+          "${RESPATH}/source/eyetheme/switcher-button-active.png" :
+          {
+            "prefix" : "../../${EYETHEME}/tabview/switcher-button-active",
+            "border-width" : 5
+          },
+          // inactive switcher button split
+          "${RESPATH}/source/eyetheme/switcher-button-inactive.png" :
+          {
+            "prefix" : "../../${EYETHEME}/tabview/switcher-button-inactive",
+            "border-width" : 5
+          },       
+
+          // active switcher first button split
+          "${RESPATH}/source/eyetheme/switcher-first-button-active.png" :
+          {
+            "prefix" : "../../${EYETHEME}/tabview/switcher-first-button-active",
+            "border-width" : 5
+          },
+          // inactive switcher first button split
+          "${RESPATH}/source/eyetheme/switcher-first-button-inactive.png" :
+          {
+            "prefix" : "../../${EYETHEME}/tabview/switcher-first-button-inactive",
+            "border-width" : 5
+          },       
+
+          // active switcher last button split
+          "${RESPATH}/source/eyetheme/switcher-last-button-active.png" :
+          {
+            "prefix" : "../../${EYETHEME}/tabview/switcher-last-button-active",
+            "border-width" : 5
+          },
+          // inactive switcher last button split
+          "${RESPATH}/source/eyetheme/switcher-last-button-inactive.png" :
+          {
+            "prefix" : "../../${EYETHEME}/tabview/switcher-last-button-inactive",
+            "border-width" : 5
+          },       
+
+
+          // active top tabview button split
+          "${RESPATH}/source/eyetheme/tab-button-top-active.png" :
+          {
+            "prefix" : "../../${EYETHEME}/tabview/tab-button-top-active",
+            "border-width" : 5
+          },
+          // inactive top tabview button split
+          "${RESPATH}/source/eyetheme/tab-button-top-inactive.png" :
+          {
+            "prefix" : "../../${EYETHEME}/tabview/tab-button-top-inactive",
+            "border-width" : 3
+          },
+          // small shadow e.g. for menus
+          "${RESPATH}/source/eyetheme/shadow-small.png" :
+          {
+            "prefix" : "../../${EYETHEME}/shadow/shadow-small",
+            "border-width" : 5
+          },
+
+          // big shadow
+          "${RESPATH}/source/eyetheme/shadow-big.png" :
+          {
+            "prefix" : "../../${EYETHEME}/shadow/shadow-big",
+            "border-width" : 7
+          },
+
+          // groupBox
+          "${RESPATH}/source/eyetheme/groupbox.png" :
+          {
+            "prefix" : "../../${EYETHEME}/groupbox/groupbox",
+            "border-width" : 4
+          }
+        }
+      }
+    },
+
+
+    "image-combine" :
+    {
+      "extend" : ["common"],
+
+      "combine-images" :
+      {
+        "images" :
+        {     
+          
+          "${RESPATH}/${EYETHEME}/scrollbar-bg-button-tb-combined.png":
+          {
+            "prefix" : [ "${RESPATH}" ],
+            "input"  :
+            [
+              {
+                "prefix" : [ "${RESPATH}" ],
+                "files"  :
+                [
+                  "${RESPATH}/${EYETHEME}/scrollbar/scrollbar-bg-button-t.png",
+                  "${RESPATH}/${EYETHEME}/scrollbar/scrollbar-bg-button-b.png",
+                  "${RESPATH}/${EYETHEME}/scrollbar/scrollbar-bg-button-focused-t.png",
+                  "${RESPATH}/${EYETHEME}/scrollbar/scrollbar-bg-button-focused-b.png"
+                ]
+              }
+            ],
+            "layout" : "vertical"
+          },
+          
+          "${RESPATH}/${EYETHEME}/scrollbar-bg-button-lr-combined.png":
+          {
+            "prefix" : [ "${RESPATH}" ],
+            "input"  :
+            [
+              {
+                "prefix" : [ "${RESPATH}" ],
+                "files"  :
+                [
+                  "${RESPATH}/${EYETHEME}/scrollbar/scrollbar-bg-button-l.png",
+                  "${RESPATH}/${EYETHEME}/scrollbar/scrollbar-bg-button-r.png",
+                  "${RESPATH}/${EYETHEME}/scrollbar/scrollbar-bg-button-focused-l.png",
+                  "${RESPATH}/${EYETHEME}/scrollbar/scrollbar-bg-button-focused-r.png"
+                ]
+              }
+            ],
+            "layout" : "vertical"
+          },
+          
+          // this is the output file
+          "${RESPATH}/${EYETHEME}/tooltip-error-tb-combined.png":
+          {
+            "prefix" : [ "${RESPATH}" ],
+            "input"  :
+            [
+              {
+                "prefix" : [ "${RESPATH}" ],
+                "files"  :
+                [
+                  "${RESPATH}/${EYETHEME}/form/tooltip-error-[tb]*.png"
+                ]
+              }
+            ],
+            "layout" : "vertical"
+          },
+
+          "${RESPATH}/${EYETHEME}/tooltip-error-lr-combined.png":
+          {
+            "prefix" : [ "${RESPATH}" ],
+            "input"  :
+            [
+              {
+                "prefix" : [ "${RESPATH}" ],
+                "files"  :
+                [
+                  "${RESPATH}/${EYETHEME}/form/tooltip-error-[lr].png"
+                ]
+              }
+            ],
+            "layout" : "horizontal"
+          },
+                    
+          "${RESPATH}/${EYETHEME}/button-tb-combined.png":
+          {
+            "prefix" : [ "${RESPATH}" ],
+            "input"  :
+            [
+              {
+                "prefix" : [ "${RESPATH}" ],
+                "files"  :
+                [
+                  "${RESPATH}/${EYETHEME}/form/button-*-[tb]*.png",
+                  "${RESPATH}/${EYETHEME}/form/button-[tb]*.png"
+                ]
+              }
+            ],
+            "layout" : "vertical"
+          },
+
+          "${RESPATH}/${EYETHEME}/button-lr-combined.png":
+          {
+            "prefix" : [ "${RESPATH}" ],
+            "input"  :
+            [
+              {
+                "prefix" : [ "${RESPATH}" ],
+                "files"  :
+                [
+                  "${RESPATH}/${EYETHEME}/form/button-*-[lr].png",
+                  "${RESPATH}/${EYETHEME}/form/button-[lr].png"
+                ]
+              }
+            ],
+            "layout" : "horizontal"
+          },
+
+          "${RESPATH}/${EYETHEME}/checkradio-combined.png":
+          {
+            "prefix" : [ "${RESPATH}" ],
+            "input"  :
+              [
+                {
+                  "prefix" : [ "${RESPATH}" ],
+                  "files"  :
+                  [
+                    "${RESPATH}/${EYETHEME}/form/checkbox*.png",
+                    "${RESPATH}/${EYETHEME}/form/radiobutton*.png"
+                  ]
+                }
+              ],
+             "layout" : "horizontal"
+          },
+
+          // window captionbar buttons
+          "${RESPATH}/${EYETHEME}/window-captionbar-buttons-combined.png":
+          {
+            "prefix" : [ "${RESPATH}" ],
+            "input"  :
+              [
+                {
+                  "prefix" : [ "${RESPATH}" ],
+                  "files"  :
+                  [
+                    "${RESPATH}/${EYETHEME}/window/close-*.png",
+                    "${RESPATH}/${EYETHEME}/window/minimize-*.png",
+                    "${RESPATH}/${EYETHEME}/window/maximize-*.png",
+                    "${RESPATH}/${EYETHEME}/window/restore-*.png"
+                  ]
+                }
+              ],
+             "layout" : "horizontal"
+          },
+
+          // window captionbar-active - top and bottom
+          "${RESPATH}/${EYETHEME}/window-captionbar-tb-combined.png":
+          {
+            "prefix" : [ "${RESPATH}" ],
+            "input"  :
+              [
+                {
+                  "prefix" : [ "${RESPATH}" ],
+                  "files"  :
+                  [
+                    "${RESPATH}/${EYETHEME}/window/captionbar-b*.png",
+                    "${RESPATH}/${EYETHEME}/window/captionbar-t*.png"
+                  ]
+                }
+              ],
+             "layout" : "vertical"
+          },
+
+          // window captionbar-active - left and right
+          "${RESPATH}/${EYETHEME}/window-captionbar-lr-combined.png":
+          {
+            "prefix" : [ "${RESPATH}" ],
+            "input"  :
+              [
+                {
+                  "prefix" : [ "${RESPATH}" ],
+                  "files"  :
+                  [
+                    "${RESPATH}/${EYETHEME}/window/captionbar-l.png",
+                    "${RESPATH}/${EYETHEME}/window/captionbar-r.png"
+                  ]
+                }
+              ],
+             "layout" : "horizontal"
+          },
+
+          "${RESPATH}/${EYETHEME}/shadow-tb-combined.png":
+          {
+            "prefix" : [ "${RESPATH}" ],
+            "input"  :
+            [
+              {
+                "prefix" : [ "${RESPATH}" ],
+                "files"  :
+                [
+                  "${RESPATH}/${EYETHEME}/shadow/shadow-[tb]*.png"
+                ]
+              }
+            ],
+            "layout" : "vertical"
+          },
+
+          "${RESPATH}/${EYETHEME}/shadow-lr-combined.png":
+          {
+            "prefix" : [ "${RESPATH}" ],
+            "input"  :
+            [
+              {
+                "prefix" : [ "${RESPATH}" ],
+                "files"  :
+                [
+                  "${RESPATH}/${EYETHEME}/shadow/shadow-[lr].png"
+                ]
+              }
+            ],
+            "layout" : "horizontal"
+          },
+          
+          "${RESPATH}/${EYETHEME}/red-shadow-tb-combined.png":
+          {
+            "prefix" : [ "${RESPATH}" ],
+            "input"  :
+            [
+              {
+                "prefix" : [ "${RESPATH}" ],
+                "files"  :
+                [
+                  "${RESPATH}/${EYETHEME}/shadow/red-shadow-[tb]*.png"
+                ]
+              }
+            ],
+            "layout" : "vertical"
+          },
+
+          "${RESPATH}/${EYETHEME}/red-shadow-lr-combined.png":
+          {
+            "prefix" : [ "${RESPATH}" ],
+            "input"  :
+            [
+              {
+                "prefix" : [ "${RESPATH}" ],
+                "files"  :
+                [
+                  "${RESPATH}/${EYETHEME}/shadow/red-shadow-[lr].png"
+                ]
+              }
+            ],
+            "layout" : "horizontal"
+          },
+          
+          "${RESPATH}/${EYETHEME}/gray-shadow-tb-combined.png":
+          {
+            "prefix" : [ "${RESPATH}" ],
+            "input"  :
+            [
+              {
+                "prefix" : [ "${RESPATH}" ],
+                "files"  :
+                [
+                  "${RESPATH}/${EYETHEME}/shadow/gray-shadow-[tb]*.png"
+                ]
+              }
+            ],
+            "layout" : "vertical"
+          },
+
+          "${RESPATH}/${EYETHEME}/gray-shadow-lr-combined.png":
+          {
+            "prefix" : [ "${RESPATH}" ],
+            "input"  :
+            [
+              {
+                "prefix" : [ "${RESPATH}" ],
+                "files"  :
+                [
+                  "${RESPATH}/${EYETHEME}/shadow/gray-shadow-[lr].png"
+                ]
+              }
+            ],
+            "layout" : "horizontal"
+          },
+
+          "${RESPATH}/${EYETHEME}/shadow-small-tb-combined.png":
+          {
+            "prefix" : [ "${RESPATH}" ],
+            "input"  :
+            [
+              {
+                "prefix" : [ "${RESPATH}" ],
+                "files"  :
+                [
+                  "${RESPATH}/${EYETHEME}/shadow/shadow-small-[tb]*.png"
+                ]
+              }
+            ],
+            "layout" : "vertical"
+          },
+
+          "${RESPATH}/${EYETHEME}/shadow-small-lr-combined.png":
+          {
+            "prefix" : [ "${RESPATH}" ],
+            "input"  :
+            [
+              {
+                "prefix" : [ "${RESPATH}" ],
+                "files"  :
+                [
+                  "${RESPATH}/${EYETHEME}/shadow/shadow-small-[lr].png"
+                ]
+              }
+            ],
+            "layout" : "horizontal"
+          },
+              
+          "${RESPATH}/${EYETHEME}/shadow-window-tb-combined.png":
+          {
+            "prefix" : [ "${RESPATH}" ],
+            "input"  :
+            [
+              {
+                "prefix" : [ "${RESPATH}" ],
+                "files"  :
+                [
+                  "${RESPATH}/${EYETHEME}/shadow/shadow-window-[tb]*.png"
+                ]
+              }
+            ],
+            "layout" : "vertical"
+          },
+
+          "${RESPATH}/${EYETHEME}/shadow-window-lr-combined.png":
+          {
+            "prefix" : [ "${RESPATH}" ],
+            "input"  :
+            [
+              {
+                "prefix" : [ "${RESPATH}" ],
+                "files"  :
+                [
+                  "${RESPATH}/${EYETHEME}/shadow/shadow-window-[lr].png"
+                ]
+              }
+            ],
+            "layout" : "horizontal"
+          },
+
+          "${RESPATH}/${EYETHEME}/cursors-combined.gif":
+          {
+            "prefix" : [ "${RESPATH}" ],
+            "input"  :
+              [
+                {
+                  "prefix" : [ "${RESPATH}" ],
+                  "files"  :
+                  [
+                    "${RESPATH}/${EYETHEME}/cursors/*.gif"
+                  ]
+                }
+              ],
+             "layout" : "horizontal"
+          },
+
+          // toolbar images
+          "${RESPATH}/${EYETHEME}/toolbar-combined.png":
+          {
+            "prefix" : [ "${RESPATH}" ],
+            "input"  :
+              [
+                {
+                  "prefix" : [ "${RESPATH}" ],
+                  "files"  :
+                  [
+                    "${RESPATH}/${EYETHEME}/toolbar/*.png"
+                  ]
+                }
+              ],
+             "layout" : "horizontal"
+          },
+
+          // arrow images
+          "${RESPATH}/${EYETHEME}/arrows-combined.png":
+          {
+            "prefix" : [ "${RESPATH}" ],
+            "input"  :
+              [
+                {
+                  "prefix" : [ "${RESPATH}" ],
+                  "files"  :
+                  [
+                    "${RESPATH}/${EYETHEME}/arrows/*.png"
+                  ]
+                }
+              ],
+             "layout" : "horizontal"
+          },
+
+          // tree images
+          "${RESPATH}/${EYETHEME}/tree-combined.png":
+          {
+            "prefix" : [ "${RESPATH}" ],
+            "input"  :
+              [
+                {
+                  "prefix" : [ "${RESPATH}" ],
+                  "files"  :
+                  [
+                    "${RESPATH}/${EYETHEME}/tree/*.png"
+                  ]
+                }
+              ],
+             "layout" : "horizontal"
+          },
+
+          // menu and menubar background images
+          "${RESPATH}/${EYETHEME}/menu-background-combined.png":
+          {
+            "prefix" : [ "${RESPATH}" ],
+            "input"  :
+              [
+                {
+                  "prefix" : [ "${RESPATH}" ],
+                  "files"  :
+                  [
+                    "${RESPATH}/${EYETHEME}/menu/background.png",
+                    "${RESPATH}/${EYETHEME}/menu/bar-background.png"
+                  ]
+                }
+              ],
+             "layout" : "horizontal"
+          },
+          
+          // menu checkbox and radiobutton
+          "${RESPATH}/${EYETHEME}/menu-checkradio-combined.gif":
+          {
+            "prefix" : [ "${RESPATH}" ],
+            "input"  :
+              [
+                {
+                  "prefix" : [ "${RESPATH}" ],
+                  "files"  :
+                  [
+                    "${RESPATH}/${EYETHEME}/menu/*.gif"
+                  ]
+                }
+              ],
+             "layout" : "horizontal"
+          },
+
+          // table images
+          "${RESPATH}/${EYETHEME}/table-combined.png":
+          {
+            "prefix" : [ "${RESPATH}" ],
+            "input"  :
+              [
+                {
+                  "prefix" : [ "${RESPATH}" ],
+                  "files"  :
+                  [
+                    "${RESPATH}/${EYETHEME}/table/*.png"
+                  ]
+                }
+              ],
+             "layout" : "horizontal"
+          },
+
+          // colorselector images
+          "${RESPATH}/${EYETHEME}/colorselector-combined.gif":
+          {
+            "prefix" : [ "${RESPATH}" ],
+            "input"  :
+              [
+                {
+                  "prefix" : [ "${RESPATH}" ],
+                  "files"  :
+                  [
+                    "${RESPATH}/${EYETHEME}/colorselector/*.gif"
+                  ]
+                }
+              ],
+             "layout" : "horizontal"
+          },
+
+          // groupbox - top and bottom
+          "${RESPATH}/${EYETHEME}/groupbox-tb-combined.png":
+          {
+            "prefix" : [ "${RESPATH}" ],
+            "input"  :
+              [
+                {
+                  "prefix" : [ "${RESPATH}" ],
+                  "files"  :
+                  [
+                    "${RESPATH}/${EYETHEME}/groupbox/groupbox-t*.png",
+                    "${RESPATH}/${EYETHEME}/groupbox/groupbox-b*.png"
+                  ]
+                }
+              ],
+             "layout" : "vertical"
+          },
+
+          // groupbox - left and right
+          "${RESPATH}/${EYETHEME}/groupbox-lr-combined.png":
+          {
+            "prefix" : [ "${RESPATH}" ],
+            "input"  :
+              [
+                {
+                  "prefix" : [ "${RESPATH}" ],
+                  "files"  :
+                  [
+                    "${RESPATH}/${EYETHEME}/groupbox/groupbox-l.png",
+                    "${RESPATH}/${EYETHEME}/groupbox/groupbox-r.png"
+                  ]
+                }
+              ],
+             "layout" : "horizontal"
+          },
+          
+          // tabview-pane - top and bottom
+          "${RESPATH}/${EYETHEME}/tabview-pane-tb-combined.png":
+          {
+            "prefix" : [ "${RESPATH}" ],
+            "input"  :
+              [
+                {
+                  "prefix" : [ "${RESPATH}" ],
+                  "files"  :
+                  [
+                    "${RESPATH}/${EYETHEME}/tabview/tabview-pane-t*.png",
+                    "${RESPATH}/${EYETHEME}/tabview/tabview-pane-b*.png"
+                  ]
+                }
+              ],
+             "layout" : "vertical"
+          },
+          
+          // tabview-pane - left and right
+          "${RESPATH}/${EYETHEME}/tabview-pane-lr-combined.png":
+          {
+            "prefix" : [ "${RESPATH}" ],
+            "input"  :
+              [
+                {
+                  "prefix" : [ "${RESPATH}" ],
+                  "files"  :
+                  [
+                    "${RESPATH}/${EYETHEME}/tabview/tabview-pane-[lr].png"
+                  ]
+                }
+              ],
+             "layout" : "horizontal"
+          },
+          
+          // TABVIEW INFO
+          // Due a rendering bug in Firefox 2 under Linux it is not
+          // possible to combine the top and bottom images of the INACTIVE
+          // tab buttons.
+          // Instead the top and bottom images have to combined SEPERATELY.
+
+          // tabview-button-active-top - top and bottom
+          "${RESPATH}/${EYETHEME}/tabview-button-top-active-tb-combined.png":
+          {
+            "prefix" : [ "${RESPATH}" ],
+            "input"  :
+              [
+                {
+                  "prefix" : [ "${RESPATH}" ],
+                  "files"  :
+                  [
+                    "${RESPATH}/${EYETHEME}/tabview/tab-button-top-active-t*.png",
+                    "${RESPATH}/${EYETHEME}/tabview/tab-button-top-active-b*.png"
+                  ]
+                }
+              ],
+             "layout" : "vertical"
+          },
+
+          // tabview-button-active-top - left and right
+          "${RESPATH}/${EYETHEME}/tabview-button-top-active-lr-combined.png":
+          {
+            "prefix" : [ "${RESPATH}" ],
+            "input"  :
+              [
+                {
+                  "prefix" : [ "${RESPATH}" ],
+                  "files"  :
+                  [
+                    "${RESPATH}/${EYETHEME}/tabview/tab-button-top-active-l.png",
+                    "${RESPATH}/${EYETHEME}/tabview/tab-button-top-active-r.png"
+                  ]
+                }
+              ],
+             "layout" : "horizontal"
+          },
+          
+          // tabview-button-inactive-top - top images
+          "${RESPATH}/${EYETHEME}/tabview-button-top-inactive-t-combined.png":
+          {
+            "prefix" : [ "${RESPATH}" ],
+            "input"  :
+              [
+                {
+                  "prefix" : [ "${RESPATH}" ],
+                  "files"  :
+                  [
+                    "${RESPATH}/${EYETHEME}/tabview/tab-button-top-inactive-t*.png"
+                  ]
+                }
+              ],
+             "layout" : "vertical"
+          },
+          
+          // tabview-button-inactive-top - bottom images
+          "${RESPATH}/${EYETHEME}/tabview-button-top-inactive-b-combined.png":
+          {
+            "prefix" : [ "${RESPATH}" ],
+            "input"  :
+              [
+                {
+                  "prefix" : [ "${RESPATH}" ],
+                  "files"  :
+                  [
+                    "${RESPATH}/${EYETHEME}/tabview/tab-button-top-inactive-b*.png"
+                  ]
+                }
+              ],
+             "layout" : "vertical"
+          },
+                
+          // splitpane-knobs
+          "${RESPATH}/${EYETHEME}/splitpane-knobs-combined.png":
+          {
+            "prefix" : [ "${RESPATH}" ],
+            "input"  :
+              [
+                {
+                  "prefix" : [ "${RESPATH}" ],
+                  "files"  :
+                  [
+                    "${RESPATH}/${EYETHEME}/splitpane/*.png"
+                  ]
+                }
+              ],
+             "layout" : "vertical"
+          }
+        }
+      }
+    }
+  }
+}

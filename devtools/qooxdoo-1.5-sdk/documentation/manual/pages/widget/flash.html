@@ -1,0 +1,179 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Flash &mdash; qooxdoo v1.5 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.5',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="qooxdoo v1.5 documentation" href="../../index.html" />
+    <link rel="up" title="Widget Reference List" href="toctree.html" />
+    <link rel="next" title="Image" href="image.html" />
+    <link rel="prev" title="Iframe" href="iframe.html" /> 
+  </head>
+  <body>
+
+		<div class="header">
+			<div class="headcenter">
+		    <a href="/"><img id="logo" src="http://resources.qooxdoo.org/images/logo.gif" alt="qooxdoo logo"/></a>
+		
+		    <h1 style="display: none;">qooxdoo</h1>
+		    <h2 class="subline">the new era of web development</h2>
+		  </div>
+			<div class="navigation">
+				<a href="http://qooxdoo.org">Home</a>
+				<a href="http://qooxdoo.org/about">About</a>
+				<a href="http://news.qooxdoo.org/">News</a>
+				<a href="http://qooxdoo.org/demo">Demo</a>
+				<a class="current" href="http://qooxdoo.org/documentation">Documentation</a>
+				<a href="http://qooxdoo.org/community">Community</a>
+				<a href="http://qooxdoo.org/download">Download</a>
+				<a href="http://bugzilla.qooxdoo.org/">Bugs</a>
+			</div>
+			<div class="subheader">&nbsp;</div>
+		</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="image.html" title="Image"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="iframe.html" title="Iframe"
+             accesskey="P">previous</a> |</li>
+				<li> &raquo; <a href="http://qooxdoo.org">Home</a> &raquo;</li>
+        <li><a href="../../index.html">qooxdoo v1.5 documentation</a> &raquo;</li>
+          <li><a href="../references.html" >References</a> &raquo;</li>
+          <li><a href="widget_ref.html" >Widget Reference</a> &raquo;</li>
+          <li><a href="toctree.html" accesskey="U">Widget Reference List</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="flash">
+<span id="pages-widget-flash-flash"></span><h1>Flash<a class="headerlink" href="#flash" title="Permalink to this headline">¶</a></h1>
+<p>Container widget for Flash.</p>
+<div class="section" id="preview-image">
+<span id="pages-widget-flash-preview-image"></span><h2>Preview Image<a class="headerlink" href="#preview-image" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="../../_images/flash.png"><img alt="widget/flash.png" src="../../_images/flash.png" style="width: 419px;" /></a></p>
+</div>
+<div class="section" id="description">
+<span id="pages-widget-flash-description"></span><h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<p>A flash movie can be controlled in a certain extent directly from JavaScript with a <a class="reference external" href="http://www.adobe.com/support/flash/publishexport/scriptingwithflash/scriptingwithflash_03.html">number of commands</a>.</p>
+<p>These commands do not cover all Flash commands, so if you need more functionality you have to fuse an ActionScript with the Flash movie and start using the ExternalInterface to communicate.</p>
+<p>To be able to use the JavaScript commands, three conditions must be full-filled:</p>
+<ol class="arabic simple">
+<li>the flash object must have been loaded to the DOM tree</li>
+<li>the flash object must have received an id</li>
+<li>the flash movie or document must have been enough loaded</li>
+</ol>
+<p>To implement this functionality in qooxdoo we have added three events: &quot;loading&quot;, &quot;loaded&quot; and &quot;timeout&quot;. When the event &quot;loading&quot; is fired the three conditions have not been full-filled, and therefore the commands can't be used. If you wanna make sure the flash object is fully loaded and ready to be used listen to the &quot;loaded&quot; event. When the &quot;loaded&quot; event is fired you can start communicating directly with the Flash object. A &quot;timeout&quot; event is fired when the flash objects fails to load. You can also use the method isLoaded() in code to make sure that the Flash object is actually loaded.</p>
+<p>Here's an example that shows how you can control changing to previous frame of a flash movie.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">flashWidget</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">qx</span><span class="p">.</span><span class="nx">ui</span><span class="p">.</span><span class="nx">embed</span><span class="p">.</span><span class="nx">Flash</span><span class="p">(</span><span class="s2">&quot;/flash.swf&quot;</span><span class="p">);</span>
+
+<span class="nx">flashWidget</span><span class="p">.</span><span class="nx">addListener</span><span class="p">(</span><span class="s2">&quot;loaded&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">flashFE</span> <span class="o">=</span> <span class="nx">flashWidget</span><span class="p">.</span><span class="nx">getFlashElement</span><span class="p">();</span>
+
+  <span class="kd">var</span> <span class="nx">currentFrame</span> <span class="o">=</span> <span class="nx">flashFE</span><span class="p">.</span><span class="nx">CurrentFrame</span><span class="p">();</span>
+  <span class="kd">var</span> <span class="nx">totalFrames</span> <span class="o">=</span> <span class="nx">flashFE</span><span class="p">.</span><span class="nx">TotalFrames</span><span class="p">();</span>
+
+  <span class="kd">var</span> <span class="nx">newFrame</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">currentFrame</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+
+  <span class="k">if</span><span class="p">(</span><span class="nx">totalFrames</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nx">newFrame</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="nx">flashFE</span><span class="p">.</span><span class="nx">GotoFrame</span><span class="p">(</span><span class="nx">newFrame</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="demos">
+<span id="pages-widget-flash-demos"></span><h2>Demos<a class="headerlink" href="#demos" title="Permalink to this headline">¶</a></h2>
+<p>Here are some links that demonstrate the usage of the widget:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://demo.qooxdoo.org/1.5/demobrowser/#widget~Flash.html">Embeded Flash in qooxdoo</a></li>
+</ul>
+</div>
+<div class="section" id="api">
+<span id="pages-widget-flash-api"></span><h2>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line">Here is a link to the API of the Widget:</div>
+<div class="line"><a class="reference external" href="http://demo.qooxdoo.org/1.5/apiviewer/#qx.ui.embed.Flash">qx.ui.embed.Flash</a></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">Flash</a><ul>
+<li><a class="reference internal" href="#preview-image">Preview Image</a></li>
+<li><a class="reference internal" href="#description">Description</a></li>
+<li><a class="reference internal" href="#demos">Demos</a></li>
+<li><a class="reference internal" href="#api">API</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="iframe.html"
+                                  title="previous chapter">Iframe</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="image.html"
+                                  title="next chapter">Image</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/pages/widget/flash.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2011, qooxdoo developers.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0b2.
+    </div>
+  </body>
+</html>

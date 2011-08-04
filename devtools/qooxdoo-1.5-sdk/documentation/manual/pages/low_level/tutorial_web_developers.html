@@ -1,0 +1,312 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Low-level tutorial for web developers &mdash; qooxdoo v1.5 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.5',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="qooxdoo v1.5 documentation" href="../../index.html" />
+    <link rel="up" title="Low Level Framework" href="../low_level.html" />
+    <link rel="next" title="HTML Element Handling" href="html_element_handling.html" />
+    <link rel="prev" title="Back-Button and Bookmark Support" href="back-button_and_bookmark_support.html" /> 
+  </head>
+  <body>
+
+		<div class="header">
+			<div class="headcenter">
+		    <a href="/"><img id="logo" src="http://resources.qooxdoo.org/images/logo.gif" alt="qooxdoo logo"/></a>
+		
+		    <h1 style="display: none;">qooxdoo</h1>
+		    <h2 class="subline">the new era of web development</h2>
+		  </div>
+			<div class="navigation">
+				<a href="http://qooxdoo.org">Home</a>
+				<a href="http://qooxdoo.org/about">About</a>
+				<a href="http://news.qooxdoo.org/">News</a>
+				<a href="http://qooxdoo.org/demo">Demo</a>
+				<a class="current" href="http://qooxdoo.org/documentation">Documentation</a>
+				<a href="http://qooxdoo.org/community">Community</a>
+				<a href="http://qooxdoo.org/download">Download</a>
+				<a href="http://bugzilla.qooxdoo.org/">Bugs</a>
+			</div>
+			<div class="subheader">&nbsp;</div>
+		</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="html_element_handling.html" title="HTML Element Handling"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="back-button_and_bookmark_support.html" title="Back-Button and Bookmark Support"
+             accesskey="P">previous</a> |</li>
+				<li> &raquo; <a href="http://qooxdoo.org">Home</a> &raquo;</li>
+        <li><a href="../../index.html">qooxdoo v1.5 documentation</a> &raquo;</li>
+          <li><a href="../low_level.html" accesskey="U">Low Level Framework</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="low-level-tutorial-for-web-developers">
+<span id="pages-tutorial-web-developers-low-level-tutorial-for-web-developers"></span><h1>Low-level tutorial for web developers<a class="headerlink" href="#low-level-tutorial-for-web-developers" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<span id="pages-tutorial-web-developers-introduction"></span><h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>Developing web applications demands more and more skills, and, as they try to match the desktop apps or even outrun them, the HTML, CSS and JavaScript code gets more and more complex. Many libraries and frameworks come to the rescue. In this tutorial we will show how a web developer can benefit from using qooxdoo in his day to day work. We will cover several use cases that many of us encounter on a daily basis from simple to more complex, and we will show how it can be achieved in both ways , using plain HTML, CSS and JavaScript, and using qooxdoo. The use cases will cover the creation of a menu that opens when a button is clicked.</p>
+</div>
+<div class="section" id="the-html">
+<span id="pages-tutorial-web-developers-the-html"></span><h2>The HTML<a class="headerlink" href="#the-html" title="Permalink to this headline">¶</a></h2>
+<p>Let's start with a piece of HTML that will host both the classical and the qooxdoo solution.</p>
+<div class="highlight-html"><div class="highlight"><pre><span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;container&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;qooxdoo&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;qx1&quot;</span><span class="nt">&gt;</span>get the position of it<span class="nt">&lt;/div&gt;</span>
+        <span class="nt">&lt;/div&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;classic&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;ex1&quot;</span><span class="nt">&gt;</span>get the position of it<span class="nt">&lt;/div&gt;</span>
+        <span class="nt">&lt;/div&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;clearer&quot;</span><span class="nt">&gt;&lt;/div&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+</pre></div>
+</div>
+<p>As you can see, inside the <tt class="docutils literal"><span class="pre">#container</span></tt> DIV we have two further DIVs that will hold the experiments for the qooxdoo version and the classic way. Inside each of them we have a button, made of a DIV too, surrounded by a 2 pixel wide red border. The CSS is presented in the &lt;HEAD&gt; section of the HTML file so you can play with it.</p>
+<div class="highlight-css"><div class="highlight"><pre><span class="o">&lt;</span><span class="nt">head</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="nt">style</span> <span class="nt">type</span><span class="o">=</span><span class="s2">&quot;text/css&quot;</span><span class="o">&gt;</span>
+  <span class="nt">body</span> <span class="p">{</span>
+    <span class="k">padding</span><span class="o">:</span> <span class="m">0px</span><span class="p">;</span>
+    <span class="k">margin</span><span class="o">:</span> <span class="m">0px</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="nf">#container</span> <span class="p">{</span>
+    <span class="k">margin</span><span class="o">:</span> <span class="m">12px</span> <span class="k">auto</span><span class="p">;</span>
+    <span class="k">padding</span><span class="o">:</span> <span class="m">4px</span> <span class="m">2px</span><span class="p">;</span>
+    <span class="k">width</span><span class="o">:</span> <span class="m">90%</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="nf">#qooxdoo</span> <span class="p">{</span>
+    <span class="k">float</span><span class="o">:</span> <span class="k">left</span><span class="p">;</span>
+    <span class="k">width</span><span class="o">:</span> <span class="m">45%</span><span class="p">;</span>
+    <span class="k">background-color</span><span class="o">:</span> <span class="m">#e1e1e1</span><span class="p">;</span>
+    <span class="k">height</span><span class="o">:</span> <span class="m">750px</span><span class="p">;</span>
+    <span class="k">margin</span><span class="o">:</span> <span class="m">0px</span> <span class="m">10px</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="nf">#classic</span> <span class="p">{</span>
+    <span class="k">float</span><span class="o">:</span> <span class="k">left</span><span class="p">;</span>
+    <span class="k">width</span><span class="o">:</span> <span class="m">45%</span><span class="p">;</span>
+    <span class="k">background-color</span><span class="o">:</span> <span class="m">#e1e1e1</span><span class="p">;</span>
+    <span class="k">height</span><span class="o">:</span> <span class="m">750px</span><span class="p">;</span>
+    <span class="k">margin</span><span class="o">:</span> <span class="m">0px</span> <span class="m">10px</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="nc">.clearer</span> <span class="p">{</span>
+    <span class="k">clear</span><span class="o">:</span> <span class="k">left</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="nf">#qx1</span> <span class="p">{</span>
+    <span class="k">border</span><span class="o">:</span> <span class="k">solid</span> <span class="m">2px</span> <span class="m">#ff0000</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="nf">#ex1</span> <span class="p">{</span>
+    <span class="k">border</span><span class="o">:</span> <span class="k">solid</span> <span class="m">2px</span> <span class="m">#ff0000</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="o">&lt;/</span><span class="nt">style</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="nt">head</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="qooxdoo-initial-step">
+<span id="pages-tutorial-web-developers-qooxdoo-initial-step"></span><h2>qooxdoo initial step<a class="headerlink" href="#qooxdoo-initial-step" title="Permalink to this headline">¶</a></h2>
+<p>For qooxdoo we will start with creating the low-level skeleton application. This procedure will create a minimal application environment and JS file that contains the low-level qooxdoo library. The benefits are small for this particular demo but when you want to create a larger application, this comes in handy.  You can find more details about this operation in the <a class="reference internal" href="setup_a_low-level_library.html"><em>Setting up a low-level library</em></a> section.  We create the application with the following command:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">$QOOXDOO_PATH</span><span class="o">/</span><span class="nx">tool</span><span class="o">/</span><span class="nx">bin</span><span class="o">/</span><span class="nx">create</span><span class="o">-</span><span class="nx">application</span><span class="p">.</span><span class="nx">py</span> <span class="o">-</span><span class="nx">n</span> <span class="nx">$APPNAME</span> <span class="o">-</span><span class="nx">t</span> <span class="nx">bom</span> <span class="o">-</span><span class="nx">o</span> <span class="nx">$OUTPUT_DIR</span>
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">$QOOXDOO_PATH</span></tt> is the path to your qooxdoo SDK, <tt class="docutils literal"><span class="pre">$APPNAME</span></tt> specifies your chosen name for the application and <tt class="docutils literal"><span class="pre">$OUTPUT_DIR</span></tt> is the directory where you want the root folder of the application to be located. The <tt class="docutils literal"><span class="pre">-o</span> <span class="pre">bom</span></tt> option specifies the low-level application type.</p>
+<p>Change to the application folder and you will find a Python script that builds our application:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="p">.</span><span class="o">/</span><span class="nx">generate</span><span class="p">.</span><span class="nx">py</span> <span class="nx">build</span>
+</pre></div>
+</div>
+<p>This can easily be automated, or integrated into your development environment. Now we have a <tt class="docutils literal"><span class="pre">qx-bom.js</span></tt> file in the current directory that we can use in the subsequent steps. You will also find a <tt class="docutils literal"><span class="pre">index.html</span></tt> file that you can use to paste the above HTML and CSS elements into.</p>
+</div>
+<div class="section" id="the-javascript-code">
+<span id="pages-tutorial-web-developers-the-javascript-code"></span><h2>The JavaScript code<a class="headerlink" href="#the-javascript-code" title="Permalink to this headline">¶</a></h2>
+<p>Now we will dive into events, positioning and location, and then creation and showing of an element.</p>
+<div class="section" id="events">
+<h3>Events<a class="headerlink" href="#events" title="Permalink to this headline">¶</a></h3>
+<p>After creating the button, we must attach a <tt class="docutils literal"><span class="pre">click</span></tt> event to it, in order to know when to show the menu. It sounds easy to add the click event to the button, but even here there are differences between the browsers. IE has the method <tt class="docutils literal"><span class="pre">attachEvent()</span></tt> (IE9 supports the W3C standard, though) while the other browsers support the standard W3C method <tt class="docutils literal"><span class="pre">addEventListener()</span></tt>. Also, the handler function of the event treats the <tt class="docutils literal"><span class="pre">this</span></tt> variable as the global window in IE and as the target element of the event in other browsers. First we fetch the HTML element into a JS variable:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">positionedDiv</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;ex1&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Now we attach the click event. The first version shows how to achieve this in the classical style:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">){</span>
+  <span class="nx">positionedDiv</span><span class="p">.</span><span class="nx">attachEvent</span><span class="p">(</span><span class="s1">&#39;onclick&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">evt</span><span class="p">){</span>
+   <span class="c1">// processing code here</span>
+  <span class="p">});</span>
+<span class="p">}</span>
+<span class="k">else</span> <span class="p">{</span>
+  <span class="nx">positionedDiv</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">evt</span><span class="p">){</span>
+   <span class="c1">// processing code here</span>
+  <span class="p">},</span> <span class="kc">false</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Here is the qooxdoo version:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">positionedDiv</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;qx1&#39;</span><span class="p">);</span>
+
+<span class="nx">qx</span><span class="p">.</span><span class="nx">bom</span><span class="p">.</span><span class="nx">Element</span><span class="p">.</span><span class="nx">addListener</span><span class="p">(</span><span class="nx">positionedDiv</span><span class="p">,</span><span class="s1">&#39;click&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(){</span>
+ <span class="c1">// processing code here</span>
+<span class="p">},</span><span class="nx">positionedDiv</span><span class="p">,</span><span class="kc">false</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>You don't have to worry about the browsers differences now, and it is a one-liner. qooxdoo is well namespaced, so you can safely use it in your webpage, it won't affect other libraries or the global objects, like Array, String ... . For the low-level things we present here, there are three packages of interest: <tt class="docutils literal"><span class="pre">qx.bom</span></tt>, <tt class="docutils literal"><span class="pre">qx.dom</span></tt> and <tt class="docutils literal"><span class="pre">qx.html</span></tt>. The above method used for adding the click-event listener on a DIV is a static method of the <tt class="docutils literal"><span class="pre">Element</span></tt> class, so one can use it  right away without instantiating objects. Most methods in these three namespaces are static.</p>
+</div>
+<div class="section" id="getting-the-position-of-a-div">
+<h3>Getting the position of a DIV<a class="headerlink" href="#getting-the-position-of-a-div" title="Permalink to this headline">¶</a></h3>
+<p>Next, we need to get <tt class="docutils literal"><span class="pre">offsetTop</span></tt> and <tt class="docutils literal"><span class="pre">offsetLeft</span></tt> properties of the DIV node, in order to find out where we must position the menu. The qooxdoo version is simple, so we will write it first to get it out of the way:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">location</span> <span class="o">=</span> <span class="nx">qx</span><span class="p">.</span><span class="nx">bom</span><span class="p">.</span><span class="nx">element</span><span class="p">.</span><span class="nx">Location</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">positionedDiv</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>We call the <tt class="docutils literal"><span class="pre">get()</span></tt> static method on the Location class in the <tt class="docutils literal"><span class="pre">qx.bom.element</span></tt> namespace. You should <a class="reference external" href="http://demo.qooxdoo.org/1.5/apiviewer">browse the docs</a> for these three namespaces to find your way when you need something. Calling <tt class="docutils literal"><span class="pre">get()</span></tt> will provide us with an object that has 4 properties, <tt class="docutils literal"><span class="pre">left</span></tt>, <tt class="docutils literal"><span class="pre">top</span></tt>, <tt class="docutils literal"><span class="pre">right</span></tt> and <tt class="docutils literal"><span class="pre">bottom</span></tt>. Now we do the following:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">offsetTop</span> <span class="o">=</span> <span class="nx">location</span><span class="p">.</span><span class="nx">top</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">offsetLeft</span> <span class="o">=</span> <span class="nx">location</span><span class="p">.</span><span class="nx">left</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>We will use these variable later.</p>
+<p>The classic way is a bit more messy. In this case, the problem is not in the JavaScript differences, but in the CSS and layout. We use the <tt class="docutils literal"><span class="pre">offsetTop</span></tt> and <tt class="docutils literal"><span class="pre">offsetLeft</span></tt> element properties which are present in all major browsers. Computing the absolute top and left distance from the upper-left corner of the document is done in the event listener:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">el</span> <span class="o">=</span> <span class="nx">evt</span><span class="p">.</span><span class="nx">srcElement</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">height</span> <span class="o">=</span> <span class="nx">el</span><span class="p">.</span><span class="nx">offsetHeight</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">offsetTop</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">offsetLeft</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">while</span><span class="p">(</span><span class="nx">el</span><span class="p">.</span><span class="nx">tagName</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()</span><span class="o">!=</span><span class="s1">&#39;body&#39;</span><span class="p">){</span>
+            <span class="nx">offsetTop</span><span class="o">+=</span><span class="nx">el</span><span class="p">.</span><span class="nx">offsetTop</span><span class="p">;</span>
+            <span class="nx">offsetLeft</span><span class="o">+=</span><span class="nx">el</span><span class="p">.</span><span class="nx">offsetLeft</span><span class="p">;</span>
+            <span class="nx">el</span><span class="o">=</span><span class="nx">el</span><span class="p">.</span><span class="nx">offsetParent</span><span class="p">;</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+<p>The problem is, when running this code it gives different results on IE and FF. On IE , the border dimension is not taken into account when computing the position. So for IE we must have something like this below:</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">el</span> <span class="o">=</span> <span class="nx">evt</span><span class="p">.</span><span class="nx">srcElement</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">height</span> <span class="o">=</span> <span class="nx">el</span><span class="p">.</span><span class="nx">offsetHeight</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">offsetTop</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">offsetLeft</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">while</span><span class="p">(</span><span class="nx">el</span><span class="p">.</span><span class="nx">tagName</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()</span><span class="o">!=</span><span class="s1">&#39;body&#39;</span><span class="p">){</span>
+        <span class="kd">var</span> <span class="nx">borderTopWidth</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">el</span><span class="p">.</span><span class="nx">currentStyle</span><span class="p">.</span><span class="nx">borderTopWidth</span><span class="p">);</span>
+        <span class="kd">var</span> <span class="nx">borderLeftWidth</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">el</span><span class="p">.</span><span class="nx">currentStyle</span><span class="p">.</span><span class="nx">borderLeftWidth</span><span class="p">);</span>
+        <span class="nx">offsetTop</span><span class="o">+=</span><span class="nx">el</span><span class="p">.</span><span class="nx">offsetTop</span><span class="o">+</span><span class="p">(</span><span class="nb">isNaN</span><span class="p">(</span><span class="nx">borderTopWidth</span><span class="p">)</span> <span class="o">?</span> <span class="mi">0</span> <span class="o">:</span> <span class="nx">borderTopWidth</span><span class="p">);</span>
+        <span class="nx">offsetLeft</span><span class="o">+=</span><span class="nx">el</span><span class="p">.</span><span class="nx">offsetLeft</span><span class="o">+</span><span class="p">(</span><span class="nb">isNaN</span><span class="p">(</span><span class="nx">borderLeftWidth</span><span class="p">)</span> <span class="o">?</span> <span class="mi">0</span> <span class="o">:</span> <span class="nx">borderLeftWidth</span><span class="p">);</span>
+        <span class="nx">el</span><span class="o">=</span><span class="nx">el</span><span class="p">.</span><span class="nx">offsetParent</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Now we get the same result. This is not a difference in the JavaScript and DOM API as was the case for the event part, it is about the way CSS and layout are handled. This is internal to the two browser classes, both of which are unified in qooxdoo and the programmer is relieved of them.</p>
+</div>
+<div class="section" id="creating-and-showing-the-menu">
+<h3>Creating and showing the menu.<a class="headerlink" href="#creating-and-showing-the-menu" title="Permalink to this headline">¶</a></h3>
+<p>A class is already in place for the menu DIV , so all we are left to do is to create the element, position it at the right coordinates and show it.
+We will show it right below the button, and left-aligned with it.</p>
+<p>The classic way:</p>
+<p>To get the bottom coordinate we will add to <tt class="docutils literal"><span class="pre">offsetTop</span></tt> variable in the click handler the button's <tt class="docutils literal"><span class="pre">offsetHeight</span></tt> value before calling the <tt class="docutils literal"><span class="pre">showMenu</span></tt> function.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">showMenu</span><span class="p">(</span><span class="nx">offsetTop</span><span class="o">+</span><span class="nx">height</span><span class="p">,</span><span class="nx">offsetLeft</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>where <tt class="docutils literal"><span class="pre">height</span></tt> variable is obtained earlier in the code fragments above. Now we are set to create and show the menu.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">menuDiv</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">);</span>
+<span class="nx">menuDiv</span><span class="p">.</span><span class="nx">className</span> <span class="o">=</span> <span class="s1">&#39;menu&#39;</span><span class="p">;</span>
+<span class="nx">menuDiv</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">top</span><span class="o">=</span><span class="nx">top</span><span class="o">+</span><span class="s1">&#39;px&#39;</span><span class="p">;</span>
+<span class="nx">menuDiv</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">left</span><span class="o">=</span><span class="nx">left</span><span class="o">+</span><span class="s1">&#39;px&#39;</span><span class="p">;</span>
+<span class="nx">menuDiv</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="s1">&#39;menu1&lt;br&gt;------------&lt;br&gt;menu2&#39;</span><span class="p">;</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">menuDiv</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>The qooxdoo way:</p>
+<p>To get the bottom coordinate we will use <tt class="docutils literal"><span class="pre">location.bottom</span></tt> computed earlier.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">menuDiv</span> <span class="o">=</span> <span class="nx">qx</span><span class="p">.</span><span class="nx">bom</span><span class="p">.</span><span class="nx">Element</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">,{</span><span class="s1">&#39;class&#39;</span><span class="o">:</span> <span class="s1">&#39;menu&#39;</span><span class="p">});</span>
+<span class="nx">qx</span><span class="p">.</span><span class="nx">bom</span><span class="p">.</span><span class="nx">element</span><span class="p">.</span><span class="nx">Style</span><span class="p">.</span><span class="nx">setStyles</span><span class="p">(</span><span class="nx">menuDiv</span><span class="p">,{</span>
+  <span class="s1">&#39;top&#39;</span><span class="o">:</span> <span class="nx">location</span><span class="p">.</span><span class="nx">bottom</span><span class="o">+</span><span class="s1">&#39;px&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;left&#39;</span><span class="o">:</span> <span class="nx">location</span><span class="p">.</span><span class="nx">left</span><span class="o">+</span><span class="s1">&#39;px&#39;</span>
+<span class="p">});</span>
+<span class="nx">menuDiv</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="s1">&#39;menu1&lt;br&gt;--------------&lt;br&gt;menu2&#39;</span><span class="p">;</span>
+<span class="nx">qx</span><span class="p">.</span><span class="nx">dom</span><span class="p">.</span><span class="nx">Element</span><span class="p">.</span><span class="nx">insertEnd</span><span class="p">(</span><span class="nx">menuDiv</span><span class="p">,</span><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Creating an element comes along with specifying attributes, too, in a good JS manner by having the second argument as a object literal with attribute names and values. The same style is for the method <a class="reference external" href="http://demo.qooxdoo.org/1.5/apiviewer/#qx.bom.element.Style~setStyles">qx.bom.element.Style.setStyles()</a>, where we specify in a single call all the styles we want for the element.</p>
+<p>The menu gets hidden when we move the mouse out of it. Adding a <tt class="docutils literal"><span class="pre">mouseout</span></tt> event is similar to the click event, so we don't repeat it here because there aren't many differences between browsers.</p>
+<p>This concludes the low-level tutorial, where we hoped to show some of the benefits you get when using qooxdoo in low-level applications.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">Low-level tutorial for web developers</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#the-html">The HTML</a></li>
+<li><a class="reference internal" href="#qooxdoo-initial-step">qooxdoo initial step</a></li>
+<li><a class="reference internal" href="#the-javascript-code">The JavaScript code</a><ul>
+<li><a class="reference internal" href="#events">Events</a></li>
+<li><a class="reference internal" href="#getting-the-position-of-a-div">Getting the position of a DIV</a></li>
+<li><a class="reference internal" href="#creating-and-showing-the-menu">Creating and showing the menu.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="back-button_and_bookmark_support.html"
+                                  title="previous chapter">Back-Button and Bookmark Support</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="html_element_handling.html"
+                                  title="next chapter">HTML Element Handling</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/pages/low_level/tutorial_web_developers.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2011, qooxdoo developers.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0b2.
+    </div>
+  </body>
+</html>

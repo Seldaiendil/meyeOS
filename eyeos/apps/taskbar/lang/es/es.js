@@ -1,0 +1,12 @@
+lang['About eyeOS'] = 'Acerca eyeOS';
+lang['Administration'] = 'Administración';
+lang['Fri'] = 'Vie';
+lang['Help'] = 'Ayuda';
+lang['Monday'] = 'Lun';
+lang['Preferences'] = 'Preferencias';
+lang['Sat'] = 'Sab';
+lang['Sun'] = 'Dom';
+lang['Sign out'] = 'Cierra la sessión';
+lang['Thu'] = 'Jue';
+lang['Tue'] = 'Mar';
+lang['Wed'] = 'Mie';

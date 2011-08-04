@@ -1,0 +1,164 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Running Simulator tests against different browsers and platforms &mdash; qooxdoo v1.4 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.4',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="qooxdoo v1.4 documentation" href="../../index.html" /> 
+  </head>
+  <body>
+
+		<div class="header">
+			<div class="headcenter">
+		    <a href="/"><img id="logo" src="http://resources.qooxdoo.org/images/logo.gif" alt="qooxdoo logo"/></a>
+		
+		    <h1 style="display: none;">qooxdoo</h1>
+		    <h2 class="subline">the new era of web development</h2>
+		  </div>
+			<div class="navigation">
+				<a href="http://qooxdoo.org">Home</a>
+				<a href="http://qooxdoo.org/about">About</a>
+				<a href="http://news.qooxdoo.org/">News</a>
+				<a href="http://qooxdoo.org/demo">Demo</a>
+				<a class="current" href="http://qooxdoo.org/documentation">Documentation</a>
+				<a href="http://qooxdoo.org/community">Community</a>
+				<a href="http://qooxdoo.org/download">Download</a>
+				<a href="http://bugzilla.qooxdoo.org/">Bugs</a>
+			</div>
+			<div class="subheader">&nbsp;</div>
+		</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+				<li> &raquo; <a href="http://qooxdoo.org">Home</a> &raquo;</li>
+        <li><a href="../../index.html">qooxdoo v1.4 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="running-simulator-tests-against-different-browsers-and-platforms">
+<span id="pages-development-simulator-platforms-simulator-platforms"></span><h1>Running Simulator tests against different browsers and platforms<a class="headerlink" href="#running-simulator-tests-against-different-browsers-and-platforms" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="general">
+<h2>General<a class="headerlink" href="#general" title="Permalink to this headline">¶</a></h2>
+<p>Since the Simulator uses Selenium RC to start the browser and run tests, the relevant sections from the <a class="reference external" href="http://seleniumhq.org/docs/05_selenium_rc.html">Selenium documentation</a> apply. Due to the special nature of qooxdoo applications, however, some browsers require additional configuration steps before they can be tested.</p>
+</div>
+<div class="section" id="firefox">
+<h2>Firefox<a class="headerlink" href="#firefox" title="Permalink to this headline">¶</a></h2>
+<p>The 3.x line of Mozilla Firefox is usually the most reliable option for Simulator tests. Firefox 3.0, 3.5 and 3.6 are all known to work on Windows XP and 7 as well as Linux and OS X.</p>
+<p>Firefox 4 is not supported by Selenium 1.0.3 out of the box, but it can be used for testing by starting it with a custom profile. These are the necessary steps:</p>
+<ul class="simple">
+<li>Start Firefox 4 with the -P option to bring up the Profile Manager</li>
+<li>Create a new profile, naming it e.g. &quot;FF4-selenium&quot;</li>
+<li>Under Options -&gt; Advanced -&gt; Network -&gt; Settings, select Manual Proxy Configuration and enter the host name or IP address and port number of your Selenium server</li>
+<li>In your application's config.json, use the <em>*custom</em> browser launcher followed by the full path to the Firefox executable and the name of the profile:</li>
+</ul>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="s2">&quot;simulation-run&quot;</span> <span class="o">:</span>
+<span class="p">{</span>
+  <span class="s2">&quot;environment&quot;</span> <span class="o">:</span>
+  <span class="p">{</span>
+    <span class="s2">&quot;simulator.testBrowser&quot;</span> <span class="o">:</span> <span class="s2">&quot;*custom C:/Program Files/Mozilla Firefox/firefox.exe -P FF4-selenium&quot;</span><span class="p">,</span>
+    <span class="p">[...]</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="internet-explorer-6-7-8-and-9">
+<h2>Internet Explorer 6, 7, 8 and 9<a class="headerlink" href="#internet-explorer-6-7-8-and-9" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="starting-the-server">
+<h3>Starting the server<a class="headerlink" href="#starting-the-server" title="Permalink to this headline">¶</a></h3>
+<p>When testing with IE, the Selenium server <strong>must</strong> be started with the <em>-singleWindow</em> option so the AUT will be loaded in an iframe. This is deactivated by default so two separate windows are opened for Selenium and the AUT. IE restricts cross-window JavaScript object access, causing the tests to fail.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">java</span> <span class="o">-</span><span class="nx">jar</span> <span class="nx">selenium</span><span class="o">-</span><span class="nx">server</span><span class="p">.</span><span class="nx">jar</span> <span class="o">-</span><span class="nx">singleWindow</span> <span class="o">-</span><span class="nx">userExtension</span> <span class="p">[...]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="launching-the-browser">
+<h3>Launching the browser<a class="headerlink" href="#launching-the-browser" title="Permalink to this headline">¶</a></h3>
+<p>To launch IE, the <em>*iexploreproxy</em> launcher should be used. The <em>*iexplore</em> launcher starts the embedded version of IE which in some ways behaves differently from the full-blown browser.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="s2">&quot;simulation-run&quot;</span> <span class="o">:</span>
+<span class="p">{</span>
+  <span class="s2">&quot;environment&quot;</span> <span class="o">:</span>
+  <span class="p">{</span>
+    <span class="s2">&quot;simulator.testBrowser&quot;</span> <span class="o">:</span> <span class="s2">&quot;*iexploreproxy&quot;</span><span class="p">,</span>
+    <span class="p">[...]</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">Running Simulator tests against different browsers and platforms</a><ul>
+<li><a class="reference internal" href="#general">General</a></li>
+<li><a class="reference internal" href="#firefox">Firefox</a></li>
+<li><a class="reference internal" href="#internet-explorer-6-7-8-and-9">Internet Explorer 6, 7, 8 and 9</a><ul>
+<li><a class="reference internal" href="#starting-the-server">Starting the server</a></li>
+<li><a class="reference internal" href="#launching-the-browser">Launching the browser</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/pages/development/simulator_platforms.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2011, qooxdoo developers.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0b2.
+    </div>
+  </body>
+</html>

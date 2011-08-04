@@ -1,0 +1,233 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>REST (Representational State Transfer) &mdash; qooxdoo v1.5 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.5',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="qooxdoo v1.5 documentation" href="../../index.html" />
+    <link rel="up" title="Communication" href="../communication.html" />
+    <link rel="next" title="RPC (Remote Procedure Call)" href="rpc.html" />
+    <link rel="prev" title="AJAX" href="remote_io.html" /> 
+  </head>
+  <body>
+
+		<div class="header">
+			<div class="headcenter">
+		    <a href="/"><img id="logo" src="http://resources.qooxdoo.org/images/logo.gif" alt="qooxdoo logo"/></a>
+		
+		    <h1 style="display: none;">qooxdoo</h1>
+		    <h2 class="subline">the new era of web development</h2>
+		  </div>
+			<div class="navigation">
+				<a href="http://qooxdoo.org">Home</a>
+				<a href="http://qooxdoo.org/about">About</a>
+				<a href="http://news.qooxdoo.org/">News</a>
+				<a href="http://qooxdoo.org/demo">Demo</a>
+				<a class="current" href="http://qooxdoo.org/documentation">Documentation</a>
+				<a href="http://qooxdoo.org/community">Community</a>
+				<a href="http://qooxdoo.org/download">Download</a>
+				<a href="http://bugzilla.qooxdoo.org/">Bugs</a>
+			</div>
+			<div class="subheader">&nbsp;</div>
+		</div>
+
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="rpc.html" title="RPC (Remote Procedure Call)"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="remote_io.html" title="AJAX"
+             accesskey="P">previous</a> |</li>
+				<li> &raquo; <a href="http://qooxdoo.org">Home</a> &raquo;</li>
+        <li><a href="../../index.html">qooxdoo v1.5 documentation</a> &raquo;</li>
+          <li><a href="../communication.html" accesskey="U">Communication</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="rest-representational-state-transfer">
+<h1>REST (Representational State Transfer)<a class="headerlink" href="#rest-representational-state-transfer" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This is an experimental feature.</p>
+</div>
+<p><tt class="docutils literal"><span class="pre">qx.io.rest.Resource</span></tt> allows to encapsulate the specifics of a REST interface. Rather than requesting URLs with a specific HTTP method manually, a resource representing the remote resource is instantiated and <strong>actions</strong> are invoked on this resource. A resource with its actions can be configured declaratively or programatically.</p>
+<div class="section" id="configuring-actions">
+<h2>Configuring actions<a class="headerlink" href="#configuring-actions" title="Permalink to this headline">¶</a></h2>
+<p>Given a REST-like interface with URLs that comply to the following pattern.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">GET</span>      <span class="o">/</span><span class="nx">photos</span>           <span class="nx">index</span>       <span class="nx">display</span> <span class="nx">a</span> <span class="nx">list</span> <span class="nx">of</span> <span class="nx">all</span> <span class="nx">photos</span>
+<span class="nx">POST</span>     <span class="o">/</span><span class="nx">photos</span>           <span class="nx">create</span>      <span class="nx">create</span> <span class="nx">a</span> <span class="k">new</span> <span class="nx">photo</span>
+<span class="nx">GET</span>      <span class="o">/</span><span class="nx">photos</span><span class="o">/:</span><span class="nx">id</span>       <span class="nx">show</span>        <span class="nx">display</span> <span class="nx">a</span> <span class="nx">specific</span> <span class="nx">photo</span>
+<span class="nx">PUT</span>      <span class="o">/</span><span class="nx">photos</span><span class="o">/:</span><span class="nx">id</span>       <span class="nx">update</span>      <span class="nx">update</span> <span class="nx">a</span> <span class="nx">specific</span> <span class="nx">photo</span>
+<span class="nx">DELETE</span>   <span class="o">/</span><span class="nx">photos</span><span class="o">/:</span><span class="nx">id</span>       <span class="nx">destroy</span>     <span class="k">delete</span> <span class="nx">a</span> <span class="nx">specific</span> <span class="nx">photo</span>
+</pre></div>
+</div>
+<p>Note <tt class="docutils literal"><span class="pre">:id</span></tt> stands for a placeholder replaced by</p>
+<p>The specifics of the REST interface can be expressed declaratively.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">description</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">index</span><span class="o">:</span> <span class="p">{</span>
+   <span class="nx">method</span><span class="o">:</span> <span class="s2">&quot;GET&quot;</span><span class="p">,</span>
+   <span class="nx">url</span><span class="o">:</span> <span class="s2">&quot;/photos&quot;</span>
+  <span class="p">},</span>
+
+  <span class="nx">create</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">method</span><span class="o">:</span> <span class="s2">&quot;POST&quot;</span><span class="p">,</span>
+    <span class="nx">url</span><span class="o">:</span> <span class="s2">&quot;/photos&quot;</span>
+  <span class="p">},</span>
+
+  <span class="nx">show</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">method</span><span class="o">:</span> <span class="s2">&quot;GET&quot;</span><span class="p">,</span>
+    <span class="nx">url</span><span class="o">:</span> <span class="s2">&quot;/photos/:id&quot;</span>
+  <span class="p">},</span>
+
+  <span class="nx">update</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">method</span><span class="o">:</span> <span class="s2">&quot;PUT&quot;</span><span class="p">,</span>
+    <span class="nx">url</span><span class="o">:</span> <span class="s2">&quot;/photos/:id&quot;</span>
+  <span class="p">},</span>
+
+  <span class="nx">destroy</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">method</span><span class="o">:</span> <span class="s2">&quot;DELETE&quot;</span><span class="p">,</span>
+    <span class="nx">url</span><span class="o">:</span> <span class="s2">&quot;/photos/:id&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">photos</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">qx</span><span class="p">.</span><span class="nx">io</span><span class="p">.</span><span class="nx">rest</span><span class="p">.</span><span class="nx">Resource</span><span class="p">(</span><span class="nx">description</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Or programatically.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">photos</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">qx</span><span class="p">.</span><span class="nx">io</span><span class="p">.</span><span class="nx">rest</span><span class="p">.</span><span class="nx">Resource</span><span class="p">();</span>
+<span class="nx">photos</span><span class="p">.</span><span class="nx">map</span><span class="p">(</span><span class="s2">&quot;index&quot;</span><span class="p">,</span> <span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="s2">&quot;/photos&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="invoking-actions">
+<h2>Invoking actions<a class="headerlink" href="#invoking-actions" title="Permalink to this headline">¶</a></h2>
+<p>Once configured, actions can be invoked. They are invoked by calling a method that is dynamically added to the resource on configuration of the action.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">photos</span><span class="p">.</span><span class="nx">index</span><span class="p">();</span>
+<span class="c1">// --&gt; GET /photos</span>
+
+<span class="nx">photos</span><span class="p">.</span><span class="nx">show</span><span class="p">({</span><span class="nx">id</span><span class="o">:</span> <span class="mi">1</span><span class="p">});</span>
+<span class="c1">// --&gt; GET /photos/1</span>
+</pre></div>
+</div>
+<p>When an action is invoked, an appropriate request is configured and send automatically.</p>
+</div>
+<div class="section" id="events">
+<h2>Events<a class="headerlink" href="#events" title="Permalink to this headline">¶</a></h2>
+<p>Events are fired by the resource when the request was sucessful or any kind of error occured. There are general resource events and action specific events. Handlers receive a <tt class="docutils literal"><span class="pre">qx.event.type.Rest</span></tt> event that, among other properties, includes the response.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="nx">photos</span><span class="p">.</span><span class="nx">index</span><span class="p">();</span>
+<span class="nx">photos</span><span class="p">.</span><span class="nx">show</span><span class="p">({</span><span class="nx">id</span><span class="o">:</span> <span class="mi">1</span><span class="p">});</span>
+
+<span class="c1">// &quot;success&quot; is fired when any request associated to resource receives a response</span>
+<span class="nx">photos</span><span class="p">.</span><span class="nx">addListener</span><span class="p">(</span><span class="s2">&quot;success&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">e</span><span class="p">.</span><span class="nx">getAction</span><span class="p">();</span>
+  <span class="c1">// --&gt; &quot;index&quot; or &quot;show&quot;</span>
+<span class="p">});</span>
+
+<span class="c1">// &quot;indexSuccess&quot; is fired when the request associated to the index action receives a response</span>
+<span class="nx">photos</span><span class="p">.</span><span class="nx">addListener</span><span class="p">(</span><span class="s2">&quot;indexSuccess&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">e</span><span class="p">.</span><span class="nx">getAction</span><span class="p">();</span>
+  <span class="c1">// --&gt; &quot;index&quot;</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="helpers">
+<h2>Helpers<a class="headerlink" href="#helpers" title="Permalink to this headline">¶</a></h2>
+<p>Helpers make it easy to accomplish common tasks when working with requests.</p>
+<ul class="simple">
+<li><strong>refresh(action)</strong> Resend request associated to action. Uses parameters given before.</li>
+<li><strong>poll(action, params)</strong> Periodically invoke action.</li>
+<li><strong>longPoll(action)</strong> Use Ajax long-polling to update whenever new data is available.</li>
+</ul>
+</div>
+<div class="section" id="data-binding">
+<h2>Data binding<a class="headerlink" href="#data-binding" title="Permalink to this headline">¶</a></h2>
+<p>A <tt class="docutils literal"><span class="pre">qx.data.store.Rest</span></tt> store can be attached to an action. Whenever a response is received, the model property of the store is updated with the marshaled response.</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">store</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">qx</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">store</span><span class="p">.</span><span class="nx">Rest</span><span class="p">(</span><span class="nx">photos</span><span class="p">,</span> <span class="s2">&quot;index&quot;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">controller</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">qx</span><span class="p">.</span><span class="nx">data</span><span class="p">.</span><span class="nx">controller</span><span class="p">.</span><span class="nx">List</span><span class="p">();</span>
+<span class="nx">store</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="nx">controller</span><span class="p">,</span> <span class="s2">&quot;model&quot;</span><span class="p">);</span>
+<span class="nx">photos</span><span class="p">.</span><span class="nx">longPoll</span><span class="p">(</span><span class="s2">&quot;index&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="../../index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference internal" href="#">REST (Representational State Transfer)</a><ul>
+<li><a class="reference internal" href="#configuring-actions">Configuring actions</a></li>
+<li><a class="reference internal" href="#invoking-actions">Invoking actions</a></li>
+<li><a class="reference internal" href="#events">Events</a></li>
+<li><a class="reference internal" href="#helpers">Helpers</a></li>
+<li><a class="reference internal" href="#data-binding">Data binding</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="remote_io.html"
+                                  title="previous chapter">AJAX</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="rpc.html"
+                                  title="next chapter">RPC (Remote Procedure Call)</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="../../_sources/pages/communication/rest.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="../../search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2011, qooxdoo developers.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0b2.
+    </div>
+  </body>
+</html>
