@@ -1,0 +1,34 @@
+{
+  "info" : 
+  {
+    "name" : "EyeOS",
+
+    "summary" : "Custom Application",
+    "description" : "This is a skeleton for a custom application with qooxdoo.",
+    
+    "homepage" : "http://some.homepage.url/",
+
+    "license" : "SomeLicense",
+    "authors" : 
+    [
+      {
+        "name" : "Seldaiendil D. Flourite",
+        "email" : "seldaiendil2@gmail.com"
+      }
+    ],
+
+    "version" : "trunk",
+    "qooxdoo-versions": ["1.5"]
+  },
+  
+  "provides" : 
+  {
+    "namespace"   : "eye",
+    "encoding"    : "utf-8",
+    "class"       : "../../eyeos/js",
+    "resource"    : "source/resource",
+    "translation" : "source/translation",
+    "type"        : "application"
+  }
+}
+
