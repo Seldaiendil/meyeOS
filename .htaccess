@@ -1,0 +1,12 @@
+RewriteEngine on
+RewriteRule ^index.php/extern/(.*)$ eyeos/extern/$1 [L]
+RewriteCond %{QUERY_STRING} extern=([^&]+)
+RewriteRule ^index.php$ eyeos/extern/%1 [L]
+
+AddType video/ogg .ogv
+AddType audio/ogg .oga
+AddType video/mp4 .mp4
+AddType video/webm .webm
+AddType video/quicktime .mov
+
+SetEnvIfNoCase Request_URI \.(og[gv]|mp3|mp4|wav|wma|m4a|m4v|webm|mov|3gp|3gpp|3g2|mpg|mpv|avi)$ no-gzip dont-vary
