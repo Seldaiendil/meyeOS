@@ -1,99 +1,187 @@
+/**
+ * Class dedicated to manage communication with server.
+ * Abstracts the programmer from all ajax and eyeos standards.
+ */
 qx.Class.define('eye.io.Server', {
 	type: 'static',
 
 	members: {
 		/**
-		 * @lint ignoreReferenceField(__refreshingFlag)
+		 * Used to know when __handleResponse forced the page to refresh or display an error.
+		 * 
+		 * @lint ignoreReferenceField(__errorFlag)
 		 */
-		__refreshingFlag: {},
+		__errorFlag: {},
+
 
 		/**
-		 * Sends a request to the server.
+		 * Loads an script from the server and executes it.
 		 *
-		 * @param data {Map} A map containing the GET and POST parameters with their values (see eyeos.callMessage())
-		 * @param callback {Function} The application's function to call on success
-		 * @param context {Object} The context of the callback function
-		 * @param options {Map} The map of options defining, among others, how to handle errors and control messages
+		 * @param checknum {Integer} Checknum of the application than executes the call.
+		 * @param get {Map} The get data to be added to the url.
+		 * @param callback {Function?} The callback to be executed when the script is fully loaded and executed.
+		 * @param context {Object?} The context of the callback
+		 * @param options {Map?} Other configurable options:
+		 *		<p><b>Possible values are:</b>
+		 *			<ul>
+		 *				<li>onError {Function}: The callback to be executed if the script cannot be loaded</li>
+		 *				<li>onErrorContext {Object?} The context of the onError callback,
+		 *					if not defined 'context' is used is used</li>
+		 *			</ul>
+		 *		</p>
 		 */
-		 call: function(data, options, callback, context) {
-			data = data || {};
+		load: function(checknum, get, callback, context, options) {
 			options = options || {};
+			get.checknum = checknum;
+			var escape = encodeURIComponent;
 
-			var keys = qx.lang.Object.getKeys(data.get);
-			var get = [];
+		 	if (qx.core.Environment.get('eye.debug')) {
+		 		eye.core.Param.is(arguments, checknum, 'checknum', 'Number');
+		 		eye.core.Param.is(arguments, get, 'get', 'Object');
+		 		if (callback) {
+			 		eye.core.Param.is(arguments, callback, 'callback', 'Function');
+		 		}
+		 	}
+
+			var keys = qx.lang.Object.getKeys(get);
+			var getParams = [];
 			for (var i = 0, len = keys.length; i < len; i++) {
-				get.push(encodeURIComponent(keys[i]) + '=' + encodeURIComponent(data.get[keys[i]]));
+				getParams.push(escape(keys[i]) + '=' + escape(get[keys[i]]));
 			}
 
-			var url = 'index.php?' + url.join('&');
-			eye.log.Console.debug('Ajax: ' + url)
+			var url = 'index.php?' + getParams.join('&');
 
-			var request = new eye.io.remote.Request(url, 'POST', 'text/plain');
-
-			if (options.timeout > 2000 || options.timeout === 0) {
-				request.setTimeout(options.timeout);
-			}
-
-			if (typeof options.async === 'boolean') {
-				request.setAsynchronous(options.async);
-			}
-
-			keys = qx.lang.Object.getKeys(data.post);
-			for (var i = 0, len = keys.length; i < len; i++) {
-				request.setData(encodeURIComponent(keys[i]) + '=' + encodeURIComponent(data.post[keys[i]]));
-			}
-
-			request.addListener('completed', function(response) {
-				this._handleResponse(response, options, callback, context);
-			});
-			request.addListener('timeout', function(e) {
-				this._handleTimeout(e, request, context, options);
-			});
-			request.addListener('failed', function(e) {
-				this._handleError(e, request, context, options);
-			});
-
-			request.send();
-			return request.toHashCode();
+			var req = new qx.io.ScriptLoader();
+			req.load(url, function(e) {
+				if (e === 'success') {
+					if (typeof callback === 'function') {
+						callback.call(context || null);
+					}
+				} else if (typeof options.onError === 'function') {
+					options.onError.call(options.onErrorContext || context || null, e);
+				}
+			}, this)
 		},
+
 
 		/**
-		 * Called on response to a request from eyeos.call() or eyeos.callMessage().
-		 * This function parses the JSON response, reads possible errors and executes callback
+		 * Calls the server to retrieve a JSON and parses it.
 		 *
-		 * @param response {qx.io.remote.Response} The response from the server
-		 * @param options {Map} The map of options passed to eyeos.call() or eyeos.callMessage()
-		 * @param callback {Function} The application's function to call on success
-		 * @param context {Object} The context of the callback function
+		 * @param checknum {Integer} Checknum of the application than executes the call.
+		 * @param message {String} The type of signal to send to the server.
+		 * @param post {Map?} The post data to be added to the request.
+		 * @param callback {Function?} The callback to be executed when the json is fully loaded and parsed.
+		 * @param context {Object?} The context of the callback
+		 * @param options {Map?} Other configurable options:
+		 *		<p><b>Possible values are:</b>
+		 *			<ul>
+		 *				<li>onError {Function}: The callback to be executed if the call fails</li>
+		 *				<li>onErrorContext {Object?} The context of the onError callback,
+		 *					if not defined 'context' is used is used</li>
+		 *			</ul>
+		 *		</p>
 		 */
-		 _handleResponse: function(response, options, callback, context) {
+		call: function(checknum, message, post, callback, context, options) {
+			options = options || {};
+			var escape = encodeURIComponent;
+		 	if (qx.core.Environment.get('eye.debug')) {
+		 		eye.core.Param.is(arguments, checknum, 'checknum', 'Number');
+		 		eye.core.Param.is(arguments, message, 'message', 'String');
+		 		if (callback) {
+			 		eye.core.Param.is(arguments, callback, 'callback', 'Function');
+		 		}
+		 	}
+
+			var url = 'index.php?checknum=' + escape(checknum) + '&message=' + escape(message);
+			var req = new qx.io.remote.Request(url, 'POST', 'text/plain');
+
+			if (post){
+				req.setData('params=' + escape(qx.lang.Json.stringify(post)));
+			}
+
+			if (typeof options.timeout === 'number' && options.timeout > 2000) {
+				req.setTimeout(options.timeout);
+			}
+			if (typeof options.async === 'boolean') {
+				req.setAsynchronous(options.async);
+			}
+
+			// parseJson depends on server so we disable it
+			req.setParseJson(false);
+
+			req.addListener('completed', this.__callResponse, this);
+			req.addListener('timeout', this.__callTimeout, this);
+			req.addListener('failed', this.__callFailed, this);
+
+			req.setUserData('callback', callback);
+			req.setUserData('context', context);
+			req.setUserData('error', options.onError);
+			req.setUserData('error-context', options.onErrorContext);
+
+			req.send();
+		},
+
+
+		__callResponse: function(response) {
+			var content = response.getContent();
 			try {
-				var content = response.getContent();
-				var json = qx.util.Json.parse(content) || {};
-				var data = this._handleControlMessage(json, options, context);
-
-				if (data === this.__refreshingFlag) {
-					return;
-				}
-
-				if (callback) {
-					callback.call(context || null, data);
-				}
+				var json = qx.lang.Json.parse(content)
 			} catch (err) {
-				eye.log.Console.error(err);
+				this.__logError(
+					'malformed_json',
+					'The server returned malformed data.',
+					'Request response is not JSON:\n\tURL --[' + request.getUrl() +
+						']--\n\tPOST --[' + request.getData() +
+						']--\n\tRESPONSE --[' + content + ']--'
+				);
+			}
+
+			this.__handleResponse(json);
+
+			var request = response.getTarget();
+			var callback = request.getUserData('callback');
+			var context = request.getUserData('context');
+
+			if (typeof callback === 'function') {
+				callback.call(context || null, json);
 			}
 		},
 
-		_handleTimeout: function(event, request, context, options) {
-			eye.log.Console.error('Request timeout: ' + request.getUrl());
-			eye.ui.Alert.error(tr('A request timed out'));
+		__callTimeout: function(response) {
+			var request = response.getTarget();
+			this.__logError(
+				'request_timeout',
+				'The server is not responding.',
+				'Request timeout:\n\tURL --[' + request.getUrl() + ']--\n\tPOST ' + request.getData()
+			);
+			var error = request.setUserData('error');
+			var context = request.setUserData('error-context');
+			if (error) {
+				error.call(context || null, 'timeout', response);
+			}
+		},
 
-			var context = options.onErrorContext || context || null;
-			options.onError.call(context, "timeout");
+		__callFailed: function(response) {
+			var request = response.getTarget();
+			this.__logError(
+				'request_failed',
+				'The server failed.',
+				'Request failed:\n\tURL --[' + request.getUrl() + ']--\n\tPOST: ' + request.getData()
+			);
+			var error = request.setUserData('error');
+			var context = request.setUserData('error-context');
+			if (error) {
+				error.call(context || null, 'failed', response);
+			}
 		},
-		_handleError: function(event, request, context, options) {
-			// TODO
+
+
+		__logError: function(type, message, log) {
+			eye.bus.ErrorBus.send(type);
+			eye.log.Console.error(log);
+			eye.ui.Dialog.error(tr(message));
 		},
+
 
 		/**
 		 * Handle special "control messages".
@@ -103,26 +191,33 @@ qx.Class.define('eye.io.Server', {
 		 * @param defaultContext {Object} The default callback context when processing an exception from a control message
 		 * @return {var} The (replaced) content to be processed by the callback, or FALSE to stop further processing.
 		 */
-		_handleControlMessage: function(response, options, defaultContext) {
+		__handleResponse: function(response, options, defaultContext, fail) {
 			switch (data.__eyeos_specialControlMessage_header) {
 				case '__control_exeption':
-					if (!options.silentError) {
-						this._handleControlError(response);
+					var error = response.__eyeos_specialControlMessage_body;
+					var callStack = [];
+
+					if (qx.lang.Type.isArray(error.stackTrace)) {
+						for (var i = 0, len = error.stackTrace.length; i < len; i++) {
+							callStack.push(this.__formatPHPError(error.stackTrace[i]));
+						}
+					} else {
+						callStack.push(error.stackTrace);
 					}
 
-					if (typeof options.onError === 'function') {
-						var context = options.onErrorContext || defaultContext || null;
-						options.onError.call(context, response);
-					}
-
-					return this.__refreshingFlag;
+					this.__logError(
+						'php_error',
+						'Error on server',
+						'Exeception on server call: ' + qx.lang.Json.stringify(error)
+					);
+					return this.__errorFlag;
 
 				case '__control_expiration':
-					eye.ui.Alert.warning('Your session has expired', function() {
+					eye.ui.Alert.warn('Your session has expired', function() {
 						window.onbeforeunload = null;
 						document.location.reload();
 					});
-					return this.__refreshingFlag;
+					return this.__errorFlag;
 
 				case '__control_enhancedData':
 					var data = response.__eyeos_specialControlMessage_body;
@@ -135,18 +230,18 @@ qx.Class.define('eye.io.Server', {
 						}
 					}
 
-					try {
-						return qx.util.Json.parse(data.data);
-					} catch (err) {
-						return data.data;
-					}
+					//try {
+						return qx.lang.Json.parse(data.data);
+					//} catch (err) {
+					//	return data.data;
+					//}
 
 				case '__control_refresh':
 					window.location.reload();
-					return this.__refreshingFlag;
+					return this.__errorFlag;
 
 				default:
-					eye.log.Console.warning(
+					eye.log.Console.warn(
 						'Unknown control message recived.\nHeader: --[' +
 						data.__eyeos_specialControlMessage_header + ']--'
 					);
@@ -154,41 +249,16 @@ qx.Class.define('eye.io.Server', {
 			}
 		},
 
+
 		/**
-		 * Handle error reports returned from the server (PHP exceptions).
-		 * Displays an error dialog containing information about the error that was returned by the server.
-		 * Reports also the same information in the debug console (Firebug, etc.), in an error message.
-		 *
-		 * @param controlMessageContent {Map} The map containing the header, body and options of the control message
+		 * Formats a PHP exception encoded into JSON to a single string.
+		 * 
+		 * @param e {Map} The exception object from JSON.
 		 */
-		_handleControlError: function(response) {
-			var error = response.__eyeos_specialControlMessage_body;
-			var callStack = [];
-
-			if (qx.lang.Type.isArray(error.stackTrace)) {
-				for (var i = 0, len = error.stackTrace.length; i < len; i++) {
-					callStack.push(this._formatPHPError(error.stackTrace[i]));
-				}
-			} else {
-				callStack.push(error.stackTrace);
-			}
-
-			eye.log.Console.error('Exeception on server call: {\n\tname: --[' +
-				error.name + ']--,\n\tmessage: --[' + error.message +
-				']--,\n\tcallStack: [\n\t\t' + callStack.join(',\n\t\t') + '\n\t]\n}');
-
-			eye.ui.Alert.error(tr('Error on server response'));
+		__formatPHPError: function(error) {
+			return '[' + error.exception + '] ' +
+				(error['class'] ? error['class'] + error.type : '') +
+				error['function'] + '(): ' + error.message + ' --- ' + error.file + ' (l.' + error.line + ')';
 		}
-	},
-
-	/**
-	 * Formats a PHP exception encoded into JSON to a single string.
-	 * 
-	 * @param e {Map} The exception object from JSON.
-	 */
-	_formatPHPError: function(error) {
-		return '[' + error.exception + '] ' +
-			(error['class'] ? error['class'] + error.type : '') +
-			error['function'] + '(): ' + error.message + ' --- ' + error.file + ' (l.' + error.line + ')';
 	}
 });

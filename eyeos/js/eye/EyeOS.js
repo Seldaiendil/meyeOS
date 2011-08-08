@@ -1,20 +1,14 @@
 qx.Class.define('eye.EyeOS', {
-  type: 'static',
+	type: 'static',
 
-  members: {
-    init: function() {
+	members: {
+		init: function() {
 
-    },
-
-
-
-    execute: function() {
-
-    },
+		},
 
 
-    open: function() {
+		open: function() {
 
-    }
-  }
+		}
+	}
 });
