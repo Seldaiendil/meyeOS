@@ -31,6 +31,7 @@
 		"test-source",
 		"translation",
 
+		"mbuild",
 		"compile",
 		"mlint"
 	],
@@ -42,6 +43,7 @@
 		"APPLICATION"  : "eye",
 		"QOOXDOO_PATH" : "../qooxdoo-1.5-sdk",
 		"QXTHEME"      : "eye.theme.EyeTheme",
+		"APPLICATION_MAIN_CLASS" : "${APPLICATION}.core.Application",
 		"API_EXCLUDE"  : ["qx.test.*", "${APPLICATION}.theme.*", "${APPLICATION}.test.*", "${APPLICATION}.simulation.*"],
 		"LOCALES"      : [ "en" ],
 		"CACHE"        : "${TMPDIR}/qx${QOOXDOO_VERSION}/cache",
@@ -98,7 +100,7 @@
 			},
 
 			"exclude": ["qx.test.*", "eye.test.*", "eye.simulation.*"],
-			"include": ["qx.*", "eye.*"]
+			"include": ["qx.*", "${APPLICATION}.*"]
 		},
 	
 		"compile" :
@@ -130,9 +132,9 @@
 			}
 		},
 
-		"build" :
+		"mbuild" :
 		{
-			"extend": ["base"],
+			"extend": ["base", "common"],
 
 			"compile-options" : 
 			{

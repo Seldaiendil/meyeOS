@@ -7,13 +7,13 @@ qx.Class.define('eye.core.Param', {
 
 	members: {
 		/**
-		 * Checks if typeof applied to an argument returns expected value
+		 * Checks if typeof applied to an argument returns expected value.
 		 * 
 		 * @param args {Arguments} The arguments scope of the function is validating.
 		 *		Used to display the function name when constructing the error.
-		 * @param value The argument value
+		 * @param value The argument value.
 		 * @param name {String} The argument name, to construct the error.
-		 * @param expect {String} The value expected to be returned by typeof
+		 * @param expect {String} The value expected to be returned by typeof.
 		 */
 		typeOf: function(args, value, name, expect) {
 			if (typeof value !== expect) {
@@ -21,18 +21,30 @@ qx.Class.define('eye.core.Param', {
 			}
 		},
 
-		isArguments: function(args, value, name) {
-			if (Object.prototype.toString.call(value) !== '[object Arguments]') {
-				throw this.__createError(args, value, name + ' is not Arguments');
-			}
-		},
-
+		/**
+		 * Checks if an argument is instance of specified class.
+		 * 
+		 * @param args {Arguments} The arguments scope of the function is validating.
+		 *		Used to display the function name when constructing the error.
+		 * @param value The argument value.
+		 * @param name {String} The argument name, to construct the error.
+		 * @param clazz {Class} The class.
+		 */
 		instanceOf: function(args, value, name, clazz) {
 			if (value instanceof clazz) {
 				throw this.__createError(args, value, name + ' is not instance of ' + clazz);
 			}
 		},
 
+		/**
+		 * Checks if Object.prototype.toString applied over argument returns expected type.
+		 * 
+		 * @param args {Arguments} The arguments scope of the function is validating.
+		 *		Used to display the function name when constructing the error.
+		 * @param value The argument value.
+		 * @param name {String} The argument name, to construct the error.
+		 * @param expect {String} The value expected to be returned.
+		 */
 		is: function(args, value, name, expect) {
 			if (this.__getString(value) !== '[object ' + expect + ']') {
 				throw this.__createError(args, value, name + ' is not a ' + expect);

@@ -1,4 +1,10 @@
 /* ************************************************************************
+    Extension of eyeTheme modified by Seldaiendil
+
+    Authors:
+      * Seldaiendil (seldaiendil2 AT gmail DOT com)
+
+/* ************************************************************************
    Extension of Aristo theme modified by eyeOS
 
    Authors:
