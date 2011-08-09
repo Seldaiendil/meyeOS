@@ -24,16 +24,72 @@
  */
 
 qx.Class.define('eye.EyeOS', {
-	type: 'static',
+
+	extend: qx.application.Standalone,
+
+
+	construct: function() {
+		var statics = this.self(arguments);
+
+		if (statics.__instance) {
+			throw new Error('Only one eye.EyeOS can be instanciated')
+		}
+
+		statics.__instance = this;
+	},
+
+
+	properties: {
+	
+		view: {
+			check: 'eye.ui.window.Screen',
+			nullable: true,
+			init: null
+		}
+		
+	},
+
 
 	members: {
-		init: function() {
+		/**
+		 * This method contains the initial application code and gets called
+		 * during startup of the application
+		 *
+		 * @lint ignoreDeprecated(alert)
+		 */
+		main: function() {
+			this.base(arguments);
 
-		},
+			if (qx.core.Environment.get("qx.debug")) {
+				// support native logging capabilities, e.g. Firebug for Firefox
+				qx.log.appender.Native;
+				// support additional cross-browser console. Press F7 to toggle visibility
+				qx.log.appender.Console;
+			}
+
+			/*
+			-------------------------------------------------------------------------
+			  Below is your actual application code...
+			-------------------------------------------------------------------------
+			*/
 
 
-		open: function() {
-
+			var view = new eye.ui.window.Screen;
+			this.setView(view);
+			this.getRoot().add(view);
+			// qx.core.Init.getApplication()
+			//eye.EyeOS.init();
 		}
+	},
+
+
+	statics: {
+
+		__instance: null,
+		
+		get: function() {
+			return eye.EyeOS.__instance;
+		}
+
 	}
 });

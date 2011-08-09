@@ -1,140 +1,112 @@
 qx.Mixin.define('eye.ui.core.MView', {
 
 	construct: function() {
+		this.__listeners = {};
+		this.__listCounts = {};
 		this.__viewWidgets = {};
 		this.__viewCache = {};
 	},
 
 
 	members: {
+		__listeners: null,
+		__listCounts: null,
 		__viewWidgets: null,
 		__viewCache: null,
-
-		/**
-		 * @lint ignoreReferenceField(__metaProperties)
-		 */
-		__metaProperties: [ 'clazz', 'widget', 'id', 'items', 'userData', 'flex' ],
-		META_KEY: '@',
 
 
 		/*
 		 * ----------------------------
-		 * JSON RENDERING BEHAVIOUR
+		 *	JSON RENDERING BEHAVIOUR
 		 * ----------------------------
 		 */
 
 		renderJson: function(config) {
-			var id = config[this.META_KEY + 'id'];
-			var items = config[this.META_KEY + 'items'];
-
-			delete config[this.META_KEY + 'id'];
-			delete config[this.META_KEY + 'items'];
-
-			this.set(config);
-
-			if (id) {
-				this.addWidget(id, this);
+			if (!('clazz' in config) && !('widget' in config)) {
+				throw new Error('A item has no "clazz" or "widget" key at JSON --[' + this + ']--');
 			}
 
-			for (var i = 0, len = items.length; i < len; i++) {
-				this.__renderWidget(items[i], this);
+			var instance = config.widget ? config.widget : new config.clazz();
+
+			if (config.flex) {
+				instance.setLayoutProperties({ flex: config.flex });
 			}
 
-			return this;
-		},
-
-		__renderWidget: function(config, parent) {
-			if (!((this.META_KEY + 'clazz') in config) &&
-				!((this.META_KEY + 'widget') in config)) {
-				throw new Error('A item has no "' + this.META_KEY + 'clazz" or "' + this.META_KEY + 'widget" key at JSON --[' + this + ']--');
+			if (config.id) {
+				this.addWidget(config.id, instance);
 			}
 
-			var meta = {};
-			var props = this.__metaProperties;
-			var key;
-			for (var i = 0, len = props.length; i < len; i++) {
-				key = props[i];
-				meta[key] = config[this.META_KEY + key];
-				delete config[this.META_KEY + key];
+			if (config.set) {
+				instance.set(config.set);
 			}
 
-			var instance = meta.widget ? meta.widget : new meta.clazz();
-			instance.set(config);
-
-			if (meta.id) {
-				this.addWidget(meta.id, instance);
-			}
-
-			if (meta.userData) {
-				var keys = qx.lang.Object.getKeys(meta.userData);
+			if (config.userData) {
+				var keys = qx.lang.Object.getKeys(config.userData);
 
 				for (var i = keys.length; i--; ) {
-					instance.setUserData(keys[i], meta.userData[keys[i]]);
+					instance.setUserData(keys[i], config.userData[keys[i]]);
 				}
 			}
 
-			if (meta.items) {
-				for (var i = 0, len = meta.items.length; i < len; i++) {
-					this.__renderWidget(meta.items[i], instance);
+			if (config.items) {
+				for (var i = 0, len = config.items.length; i < len; i++) {
+					instance.add(this.renderJson(config.items[i]));
 				}
 			}
 
-			if (meta.flex) {
-				instance.setLayoutProperties({ flex: meta.flex });
+			var listeners = this.__listeners[config.id];
+			if (listeners) {
+				for (var i = 0, len = listeners.length; i < len; i++) {
+					instance.addListener(listeners[i].event, listeners[i].handler, this);
+				}
 			}
-
-			if (!meta.widget) {
-				parent.add(instance);
-			 }
 
 			return instance;
 		},
 
-		renderMenu: function(genericConfig, items) {
-			if (!items) {
-				items = genericConfig;
-				genericConfig = null;
+
+		renderListItem: function(config, itemNum) {
+			var id = config.id;
+
+			if (typeof itemNum === 'undefined') {
+				var list = this.__listCounts;
+				if (!list[id]) {
+					list[id] = 0;
+				} else {
+					list[id]++;
+				}
+				itemNum = list[id];
 			}
 
-			var config, item, childs;
+			if (id.indexOf('#') !== -1) {
+				config.id = id.replace(/#/, itemNum);
+			} else {
+				config.id = id + '/' + itemNum;
+			}
+
+			var items = config.items;
+			delete config.items;
+
+			var instance = this.renderJson(config);
 			
-			var menu = new eye.ui.menu.Menu();
-
-			for (var i = 0, len = items.length; i < len; i++) {
-
-				config = items[i];
-				if (config === '-') {
-
-					menu.addSeparator();
-
-				} else {
-
-					// Item list must not be parsed by this.__renderWidget
-					childs = config['@items'];
-					delete config['@items'];
-
-					// Set the class must be used to create widget
-					config['@type'] = eye.ui.menu.Button;
-					item = this.__renderWidget(config, menu);
-
-					if (childs) {
-						item.setMenu(this.renderMenu(genericConfig, childs));
-					}
-
-					if (genericConfig) {
-						item.set(genericConfig);
-					}
-					
-					item.set(config);
+			if (items) {
+				for (var i = 0, len = items.length; i < len; i++) {
+					instance.add(this.renderListItem(items[i], itemNum));
 				}
 			}
 
-			return menu;
+			var listeners = this.__listeners[id];
+			if (listeners) {
+				for (var i = 0, len = listeners.length; i < len; i++) {
+					instance.addListener(listeners[i].event, listeners[i].handler, this);
+				}
+			}
 		},
+
 
 		/*
 		 * ----------------------------
-		 * LISTENERS BEHAVIOUR
+		 *	LISTENERS BEHAVIOUR
 		 * ----------------------------
 		 */
 
@@ -157,8 +129,16 @@ qx.Mixin.define('eye.ui.core.MView', {
 				id = events.shift();
 				widget = this.getWidget(id);
 
+				if (!this.__listeners[id]) {
+					this.__listeners[id] = [];
+				}
+
 				for (var j = events.length; j--; ) {
-					widget.addListener(events[j], handler, widget);
+					widget.addListener(events[j], handler, this);
+					this.__listeners[id].push({
+						event: events[j],
+						handler: handler
+					});
 				}
 			}
 		},

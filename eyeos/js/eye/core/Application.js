@@ -24,7 +24,7 @@ qx.Class.define('eye.core.Application', {
 
 	properties: {
 		view: {
-			check: 'eye.ui.window.Screen'
+			check: 'eye.ui.desktop.Screen'
 			//init: null
 		}
 	},
@@ -54,7 +54,7 @@ qx.Class.define('eye.core.Application', {
 			*/
 
 
-			var view = new eye.ui.window.Screen;
+			var view = new eye.ui.desktop.Screen;
 			this.setView(view);
 			this.getRoot().add(view);
 			// qx.core.Init.getApplication()
