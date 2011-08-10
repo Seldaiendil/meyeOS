@@ -9,7 +9,7 @@ qx.Class.define('eye.ui.window.Dialog', {
 		if (parent) {
 			this.setParent(parent);
 		}
-	}
+	},
 
 
 	properties: {
@@ -74,7 +74,7 @@ qx.Class.define('eye.ui.window.Dialog', {
 
 				this.moveTo(left, top);
 			}
-		},
+		}
 		
 	}
 

@@ -2,13 +2,8 @@ qx.Class.define('eye.core.AppsManager', {
 	type: 'static',
 
 
-	construct: function() {
-		this.__apps = {};
-	},
-
-
-	members: {
-		__apps: null,
+	statics: {
+		__apps: {},
 
 
 		/**

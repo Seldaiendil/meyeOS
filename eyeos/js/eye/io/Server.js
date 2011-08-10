@@ -5,7 +5,7 @@
 qx.Class.define('eye.io.Server', {
 	type: 'static',
 
-	members: {
+	statics: {
 		/**
 		 * Used to know when __handleResponse forced the page to refresh or display an error.
 		 * 

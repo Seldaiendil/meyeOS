@@ -42,7 +42,7 @@ qx.Class.define('eye.EyeOS', {
 	properties: {
 	
 		view: {
-			check: 'eye.ui.window.Screen',
+			check: 'eye.ui.desktop.Screen',
 			nullable: true,
 			init: null
 		}
@@ -73,12 +73,10 @@ qx.Class.define('eye.EyeOS', {
 			-------------------------------------------------------------------------
 			*/
 
-
-			var view = new eye.ui.window.Screen;
+			var view = new eye.ui.desktop.Screen;
 			this.setView(view);
-			this.getRoot().add(view);
+			this.getRoot().add(view, { width: '100%', height: '100%' });
 			// qx.core.Init.getApplication()
-			//eye.EyeOS.init();
 		}
 	},
 

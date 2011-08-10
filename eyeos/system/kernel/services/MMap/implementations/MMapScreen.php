@@ -61,22 +61,6 @@ class MMapScreen extends Kernel implements IMMap {
 	<head>
 		<link rel="icon" type="image/png" href="eyeos/extern/images/favicon.png" />
 		<script type="text/javascript" src="eyeos/extern/eyeos.js"></script>
-		<script type="text/javascript">
-			function init() {
-				alert("Start");
-			}
-			if (document.addEventListener) {
-				document.addEventListener("DOMContentLoaded", init, false);
-			} else if (document.attachEvent) {
-				document.attachEvent("onreadystatechange", function () {
-					if (document.readyState == "complete") {
-						init();
-					}
-				});
-			} else {
-				window.onload = init;
-			}
-		</script>
 		<title>Welcome to eyeOS '. EYE_VERSION .'</title>
 	</head>
 	<body></body>

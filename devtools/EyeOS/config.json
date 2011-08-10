@@ -43,7 +43,7 @@
 		"APPLICATION"  : "eye",
 		"QOOXDOO_PATH" : "../qooxdoo-1.5-sdk",
 		"QXTHEME"      : "eye.theme.EyeTheme",
-		"APPLICATION_MAIN_CLASS" : "${APPLICATION}.core.Application",
+		"APPLICATION_MAIN_CLASS" : "${APPLICATION}.EyeOS",
 		"API_EXCLUDE"  : ["qx.test.*", "${APPLICATION}.theme.*", "${APPLICATION}.test.*", "${APPLICATION}.simulation.*"],
 		"LOCALES"      : [ "en" ],
 		"CACHE"        : "${TMPDIR}/qx${QOOXDOO_VERSION}/cache",
@@ -129,6 +129,23 @@
 			"lint-check" :
 			{
 				"allowed-globals" : [ "qx", "${APPLICATION}", "tr" ]
+			}
+		},
+
+		"build":
+		{
+			"extend": ["base"],
+
+
+			"compile-options" : 
+			{
+				"code" :
+				{
+		          "format"   : true,
+		          "locales"  : "${LOCALES}",
+		          "except"   : [],
+		          "optimize" : []
+				}
 			}
 		},
 

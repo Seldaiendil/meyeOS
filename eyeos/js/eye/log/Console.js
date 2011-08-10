@@ -5,7 +5,7 @@
 qx.Class.define('eye.log.Console', {
 	type: 'static',
 
-	members: {
+	statics: {
 
 		/**
 		 * Logs debug data

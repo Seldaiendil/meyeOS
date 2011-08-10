@@ -5,7 +5,7 @@
 qx.Class.define('eye.core.Param', {
 	type: 'static',
 
-	members: {
+	statics: {
 		/**
 		 * Checks if typeof applied to an argument returns expected value.
 		 * 

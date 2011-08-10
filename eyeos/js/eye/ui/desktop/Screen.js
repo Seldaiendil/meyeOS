@@ -8,6 +8,7 @@ qx.Class.define('eye.ui.desktop.Screen', {
 
 		this._setLayout(new qx.ui.layout.Dock);
 		this._add(this._createChildControl('desktop'));
+		this.setBackgroundColor('red');
 	},
 
 
