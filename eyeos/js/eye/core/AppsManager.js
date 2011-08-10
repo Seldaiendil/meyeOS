@@ -72,6 +72,8 @@ qx.Class.define('eye.core.AppsManager', {
 			eye.io.Server.load(checknum, get, function() {
 				loader.destroy();
 				var clazz = this.__apps[appName.toUpperCase()];
+
+				clazz.run();
 			}, this);
 		}
 	}

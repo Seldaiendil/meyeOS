@@ -1,1 +1,4 @@
 *.pyc
+devtools/EyeOS/build/script/
+devtools/EyeOS/cache/
+eyeos/system/conf/libs/log4php/logs/
