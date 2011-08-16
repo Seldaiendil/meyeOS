@@ -29,13 +29,10 @@ qx.Class.define('eye.EyeOS', {
 
 
 	construct: function() {
-		var statics = this.self(arguments);
-
-		if (statics.__instance) {
+		if (eye.EyeOS.$$instance) {
 			throw new Error('Only one eye.EyeOS can be instanciated')
 		}
-
-		statics.__instance = this;
+		eye.EyeOS.$$instance = this;
 	},
 
 
@@ -43,6 +40,12 @@ qx.Class.define('eye.EyeOS', {
 	
 		view: {
 			check: 'eye.ui.desktop.Screen',
+			nullable: true,
+			init: null
+		},
+
+		desktop: {
+			check: 'eye.ui.desktop.IDesktop',
 			nullable: true,
 			init: null
 		}
@@ -75,6 +78,7 @@ qx.Class.define('eye.EyeOS', {
 
 			var view = new eye.ui.desktop.Screen;
 			this.setView(view);
+			this.setDesktop(view.getDesktop());
 			this.getRoot().add(view, { width: '100%', height: '100%' });
 			// qx.core.Init.getApplication()
 		}
@@ -82,11 +86,9 @@ qx.Class.define('eye.EyeOS', {
 
 
 	statics: {
-
-		__instance: null,
 		
 		get: function() {
-			return eye.EyeOS.__instance;
+			return eye.EyeOS.$$instance;
 		}
 
 	}

@@ -7,8 +7,9 @@ qx.Class.define('eye.ui.desktop.Screen', {
 		this.base(arguments);
 
 		this._setLayout(new qx.ui.layout.Dock);
-		this._add(this._createChildControl('desktop'));
-		this.setBackgroundColor('red');
+
+		this._add(new eye.ui.desktop.Bar(), { edge: 'top' });
+		this._add(this._createChildControl('desktop'), { edge: 'center' });;
 	},
 
 
@@ -24,9 +25,8 @@ qx.Class.define('eye.ui.desktop.Screen', {
 
 	members: {
 
-		_createBar: function() {
-			var bar = eye.ui.desktop.Bar();
-			bar.setAppearance('screen-bar');
+		getDesktop: function() {
+			return this.getChildControl('desktop');
 		},
 
 		
