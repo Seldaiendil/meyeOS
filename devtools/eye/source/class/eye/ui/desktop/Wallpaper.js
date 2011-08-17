@@ -6,6 +6,11 @@ qx.Class.define('eye.ui.desktop.Wallpaper', {
 	construct: function() {
 		this.base(arguments);
 
+		this._setLayout(new qx.ui.layout.Grow);
+
+		this.__mosaic = new qx.ui.decoration.Background;
+		this.__mosaic.setBackgroundRepeat('repeat');
+
 		this.__imageInfoCache = {};
 	}
 
@@ -43,6 +48,8 @@ qx.Class.define('eye.ui.desktop.Wallpaper', {
 
 		__imageInfoCache: null,
 
+		__mosaic: null,
+
 
 		__cacheImage: function(url, data) {
 			if (data.failed) {
@@ -53,9 +60,9 @@ qx.Class.define('eye.ui.desktop.Wallpaper', {
 		},
 
 
-		//--------------
+		//---------------
 		// PROPERTIES
-		//--------------
+		//---------------
 				
 		__applyColor: function(value) {
 			this.setBackgroundColor(value);
@@ -75,31 +82,70 @@ qx.Class.define('eye.ui.desktop.Wallpaper', {
 		},
 
 
-		__applyMode: function(value) {
+		__applyMode: function(value, oldValue) {
+			var decorator = this.getDecorator();
 			var image = this.getChildControl('image');
 
-			switch (value) {
-				case 'mosaic':
-					image.set
-					break;
+			if (value === 'mosaic') {
+				this._removeAll()
+				this.__mosaic.setBackgroundImage(this.getImage());
+				this.setDecorator(this.__mosaic);
+				return;
+			}
+			if (oldValue === 'mosaic') {
+				this.setDecorator(null);
+				image.setBackgroundImage(this.getImage());
+				this._add(image);
+			}
 
-				case 'zoom':
-					break;
+			var data = this.__imageInfoCache[this.getImage()];
+			var bound = this.getBounds();
 
-				case 'center':
-					break;
+			if (value === 'center') {
+				image.setWidth(data.width);
+				image.setHeight(data.height);
+				this._centerImage();
+				return;
+			}
 
-				case 'scale':
-					break;
+			if (value === 'fill') {
+				image.setWidth(bound.width);
+				image.setHeight(bound.height);
+				return;
+			}
 
-				case 'grow':
-					break;
+			var xRelation = bound.width / data.width;
+			var yRelation = bound.height / data.height;
 
-				case 'expand':
-					
-			}	
+			if (value === 'zoom') {
+				var minRel = xRelation < yRelation ? xRelation : yRelation;
+				image.setWidth(Math.round(data.width * minRel);
+				image.setHeight(Math.round(data.height * minRel);
+				this._centerImage();
+			} else if (value === 'scale') {
+				var maxRel = xRelation > yRelation ? xRelation : yRelation;
+				image.setWidth(Math.round(data.width * maxRel);
+				image.setHeight(Math.round(data.height * maxRel);
+				this._centerImage();
+			}
 		},
 
+
+		//---------------
+		// CHILD CONTROLS
+		//---------------
+
+		_createChildControlImpl: function(id) {
+			var control;
+
+			switch (id) {
+				case 'image':
+					control = new qx.ui.basic.Image;
+					break;
+			}
+
+			return control || this.base(arguments, id);
+		}
 	}
 
 });
