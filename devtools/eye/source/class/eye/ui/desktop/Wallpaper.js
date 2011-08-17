@@ -3,6 +3,13 @@ qx.Class.define('eye.ui.desktop.Wallpaper', {
 	extend: qx.ui.core.Widget,
 
 
+	construct: function() {
+		this.base(arguments);
+
+		this.__imageInfoCache = {};
+	}
+
+
 	properties: {
 		
 		color: {
@@ -34,7 +41,16 @@ qx.Class.define('eye.ui.desktop.Wallpaper', {
 
 	members: {
 
-		__originalImage
+		__imageInfoCache: null,
+
+
+		__cacheImage: function(url, data) {
+			if (data.failed) {
+				eye.log.Console.warn('Fail to load image: ' + url);
+			}
+
+			this.__imageInfoCache[url] = data;
+		},
 
 
 		//--------------
@@ -52,13 +68,15 @@ qx.Class.define('eye.ui.desktop.Wallpaper', {
 
 
 		__applyImage: function(value) {
+			if (!this.__imageInfoCache[value]) {
+				qx.io.ImageLoader.load(value, this.__cacheImage, this);
+			}
 			this.getChildControl('image').setSource(value);
 		},
 
 
 		__applyMode: function(value) {
-			var image = this.getChildControl('image').set({
-			});
+			var image = this.getChildControl('image');
 
 			switch (value) {
 				case 'mosaic':
