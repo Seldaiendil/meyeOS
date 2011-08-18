@@ -6,7 +6,15 @@ qx.Class.define('eye.ui.desktop.Wallpaper', {
 	construct: function() {
 		this.base(arguments);
 
-		this._setLayout(new qx.ui.layout.Grow);
+		// Configure layout to center cell 1,1
+		var layout = new qx.ui.layout.Grid;
+		layout.setFlexColumn(0, 1);
+		layout.setFlexColumn(2, 1);
+		layout.setFlexRow(0, 1);
+		layout.setFlexRow(2, 1);
+
+		this._setLayout(layout);
+		this._add(new qx.ui.core.Spacer, { row: 2, column: 2 });
 
 		this.__mosaic = new qx.ui.decoration.Background;
 		this.__mosaic.setBackgroundRepeat('repeat');
@@ -36,7 +44,7 @@ qx.Class.define('eye.ui.desktop.Wallpaper', {
 		mode: {
 			event: 'changeMode',
 			apply: '_applyMode',
-			check: ['mosaic', 'zoom', 'center', 'scale', 'grow', 'expand'],
+			check: ['mosaic', 'center', 'fill', 'zoom', 'scale'],
 			nullable: false,
 			init: 'center',
 		}
@@ -57,6 +65,14 @@ qx.Class.define('eye.ui.desktop.Wallpaper', {
 			}
 
 			this.__imageInfoCache[url] = data;
+		},
+
+		_centerImage: function(bound, width, height) {
+			var image = this.getChildControl('image');
+			var xOffset = bound.width - width;
+			var yOffset = bound.height - height;
+
+			image.setMarginLeft
 		},
 
 
@@ -87,7 +103,7 @@ qx.Class.define('eye.ui.desktop.Wallpaper', {
 			var image = this.getChildControl('image');
 
 			if (value === 'mosaic') {
-				this._removeAll()
+				image.exclude();
 				this.__mosaic.setBackgroundImage(this.getImage());
 				this.setDecorator(this.__mosaic);
 				return;
@@ -95,7 +111,7 @@ qx.Class.define('eye.ui.desktop.Wallpaper', {
 			if (oldValue === 'mosaic') {
 				this.setDecorator(null);
 				image.setBackgroundImage(this.getImage());
-				this._add(image);
+				image.show();
 			}
 
 			var data = this.__imageInfoCache[this.getImage()];
@@ -104,7 +120,6 @@ qx.Class.define('eye.ui.desktop.Wallpaper', {
 			if (value === 'center') {
 				image.setWidth(data.width);
 				image.setHeight(data.height);
-				this._centerImage();
 				return;
 			}
 
@@ -118,15 +133,13 @@ qx.Class.define('eye.ui.desktop.Wallpaper', {
 			var yRelation = bound.height / data.height;
 
 			if (value === 'zoom') {
-				var minRel = xRelation < yRelation ? xRelation : yRelation;
-				image.setWidth(Math.round(data.width * minRel);
-				image.setHeight(Math.round(data.height * minRel);
-				this._centerImage();
-			} else if (value === 'scale') {
 				var maxRel = xRelation > yRelation ? xRelation : yRelation;
-				image.setWidth(Math.round(data.width * maxRel);
-				image.setHeight(Math.round(data.height * maxRel);
-				this._centerImage();
+				image.setWidth(data.width * maxRel);
+				image.setHeight(data.height * maxRel);
+			} else if (value === 'scale') {
+				var minRel = xRelation < yRelation ? xRelation : yRelation;
+				image.setWidth(data.width * minRel);
+				image.setHeight(data.height * minRel);
 			}
 		},
 
@@ -141,6 +154,10 @@ qx.Class.define('eye.ui.desktop.Wallpaper', {
 			switch (id) {
 				case 'image':
 					control = new qx.ui.basic.Image;
+					control.setLayoutProperties({
+						row: 1,
+						column: 1
+					});
 					break;
 			}
 
