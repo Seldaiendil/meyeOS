@@ -70,7 +70,26 @@
     // If you want to tweak a job setting, see the following sample where
     // the "format" feature of the "build-script" job is overridden.
     // To see a list of available jobs, invoke 'generate.py x'.
-	/*
+
+    "source-all-script-eyeos":
+    {
+      "extend": ["source-all-script"],
+
+      "environment": {
+        "eyeos.debug": true
+      }
+    },
+
+    "source-all" :
+    {
+      "desc"    : "create source version of current application, with all classes",
+
+      "run" :
+      [
+        "source-all-script-eyeos"
+      ]
+    }
+    /*
     ,"build-script" :
     {
       "compile-options" : 

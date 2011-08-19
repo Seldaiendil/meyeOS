@@ -1,3 +1,14 @@
+/**
+ * This class manages how the wallpaper must be show,
+ * handles background color and a image with diferents modes:
+ *	<ul>
+ *		<li>'<b>mosaic:</b>' Will repeat the image at original size from coords { top: 0, left: 0 }</li>
+ * 		<li>'<b>center:</b>' Centers the image on the wallpaper at its original size</li>
+ * 		<li>'<b>fill:</b>' Resizes the image to fill wallpaper height and width without respecting aspect ratio</li>
+ * 		<li>'<b>zoom:</b>' Resizes the image to fill all the wallpaper respecting aspect ratio</li>
+ * 		<li>'<b>scale:</b>' Resizes the image to adapt to the wallpaper respecting aspect radio</li>
+ * 	</ul>
+ */
 qx.Class.define('eye.ui.desktop.Wallpaper', {
 	
 	extend: qx.ui.core.Widget,
@@ -20,11 +31,12 @@ qx.Class.define('eye.ui.desktop.Wallpaper', {
 		this.__mosaic.setBackgroundRepeat('repeat');
 
 		this.__imageInfoCache = {};
-	}
+	},
 
 
 	properties: {
 		
+		/** The background color of the wallpaper */
 		color: {
 			event: 'changeColor',
 			apply: '_applyColor',
@@ -33,6 +45,7 @@ qx.Class.define('eye.ui.desktop.Wallpaper', {
 			init: 'black'
 		},
 
+		/** The image will be used as background, use null to not display a image */
 		image: {
 			event: 'changeImage',
 			apply: '_applyImage',
@@ -41,12 +54,13 @@ qx.Class.define('eye.ui.desktop.Wallpaper', {
 			init: null
 		},
 
+		/** The mode the image must be shown, see class description for details */
 		mode: {
 			event: 'changeMode',
 			apply: '_applyMode',
 			check: ['mosaic', 'center', 'fill', 'zoom', 'scale'],
 			nullable: false,
-			init: 'center',
+			init: 'center'
 		}
 
 	},
@@ -67,14 +81,6 @@ qx.Class.define('eye.ui.desktop.Wallpaper', {
 			this.__imageInfoCache[url] = data;
 		},
 
-		_centerImage: function(bound, width, height) {
-			var image = this.getChildControl('image');
-			var xOffset = bound.width - width;
-			var yOffset = bound.height - height;
-
-			image.setMarginLeft
-		},
-
 
 		//---------------
 		// PROPERTIES
@@ -90,16 +96,31 @@ qx.Class.define('eye.ui.desktop.Wallpaper', {
 		},
 
 
-		__applyImage: function(value) {
-			if (!this.__imageInfoCache[value]) {
+		__applyImage: function(value, oldValue) {
+			if (value !== null && !this.__imageInfoCache[value]) {
 				qx.io.ImageLoader.load(value, this.__cacheImage, this);
 			}
-			this.getChildControl('image').setSource(value);
+			if (this.getMode() === 'mosaic') {
+				if (value === null) {
+					this.setDecorator(null);
+				} else if (oldValue === null) {
+					this.setDecorator(this.__mosaic);
+				} else {
+					this.__mosaic.setBackgroundImage(value);
+				}
+			} else {
+				if (value === null) {
+					this.getChildControl('image').exclude();
+				} else if (oldValue === null) {
+					this.getChildControl('image').show();
+				} else {
+					this.getChildControl('image').setSource(value);
+				}
+			}
 		},
 
 
 		__applyMode: function(value, oldValue) {
-			var decorator = this.getDecorator();
 			var image = this.getChildControl('image');
 
 			if (value === 'mosaic') {
@@ -110,7 +131,7 @@ qx.Class.define('eye.ui.desktop.Wallpaper', {
 			}
 			if (oldValue === 'mosaic') {
 				this.setDecorator(null);
-				image.setBackgroundImage(this.getImage());
+				image.setSource(this.getImage());
 				image.show();
 			}
 
@@ -154,6 +175,7 @@ qx.Class.define('eye.ui.desktop.Wallpaper', {
 			switch (id) {
 				case 'image':
 					control = new qx.ui.basic.Image;
+					control.setScale(true);
 					control.setLayoutProperties({
 						row: 1,
 						column: 1

@@ -1,3 +1,6 @@
+/**
+ * Main container of the application
+ */
 qx.Class.define('eye.ui.desktop.Screen', {
 
 	extend: qx.ui.core.Widget,
@@ -31,13 +34,6 @@ qx.Class.define('eye.ui.desktop.Screen', {
 
 		
 		_createChildControlImpl: function(id) {
-			if (id === 'desktop') {
-				return new eye.ui.desktop.Desktop();
-			} else {
-				return this.base(arguments);
-			}
-
-			/*
 			var control;
 
 			switch (id) {
@@ -46,7 +42,6 @@ qx.Class.define('eye.ui.desktop.Screen', {
 			}
 
 			return control || this.base(arguments);
-			*/
 		}
 
 	}
